@@ -93,11 +93,7 @@ class MistralKGBuilder:
             
             # Check device
             if torch.backends.mps.is_available():
-                device = "mps"
                 logger.info("Using MPS (Apple Silicon) device")
-            else:
-                device = "cpu"
-                logger.info("Using CPU device")
             
             # Load tokenizer
             logger.info("Loading tokenizer...")
@@ -140,7 +136,6 @@ class MistralKGBuilder:
                 "text-generation",
                 model=model,
                 tokenizer=tokenizer,
-                # device=device,
                 torch_dtype=torch.float16,
                 framework="pt"
             )
@@ -247,52 +242,13 @@ class MistralKGBuilder:
             logger.info("Raw model response:")
             logger.info(response)
             
-            
-            def clean_json_text(text: str) -> str:
-                """Clean and fix JSON string from model response with enhanced handling."""
-            #     import re
-
-            #     # Handle instruction markers and extract JSON portion
-                parts = text.split('[/INST]')
-                text = parts[-1].strip() if len(parts) > 1 else text
-                
-            #     # Find the outermost JSON structure
-            #     json_start = text.find('{')
-            #     json_end = text.rfind('}') + 1
-            #     if json_start == -1 or json_end == 0:
-            #         logger.warning("No JSON structure found in response")
-            #         return "{}"
-                
-            #     text = text[json_start:json_end]
-
-            #     # Basic cleanups
-            #     text = text.replace("'", '"')  # Replace single quotes
-            #     text = ''.join(char for char in text if ord(char) >= 32)  # Remove non-printable chars
-
-            #     # Fix common JSON issues
-            #     def fix_quotes(match):
-            #         # Handle nested quotes in string values
-            #         inner_text = match.group(1)
-            #         # Escape any unescaped double quotes
-            #         inner_text = inner_text.replace('"', '\\"')
-            #         return f'"{inner_text}"'
-
-            #     # Fix quoted values with nested quotes
-            #     text = re.sub(r'"((?:[^"\\]|\\.)*)"(?=,|\s*})', fix_quotes, text)
-                
-            #     # Fix unquoted property names
-            #     text = re.sub(r'(\w+):', r'"\1":', text)
-                
-            #     # Remove any trailing commas before closing brackets
-            #     text = re.sub(r',(\s*[}\]])', r'\1', text)
-                
-            #     return text
-                return text
-            
-            cleaned_json = clean_json_text(response)
+            # Extract JSON part from response
+            parts = response.split('[/INST]')
+            cleaned_json = parts[-1].strip() if len(parts) > 1 else response
             logger.info("Cleaned JSON text:")
             logger.info(cleaned_json)
-
+            
+            # Parse JSON and validate structure
             try:
                 parsed_data = json.loads(cleaned_json)
             except json.JSONDecodeError as e:
@@ -405,23 +361,6 @@ class MistralKGBuilder:
             for i in tqdm(range(0, len(df), self.config.batch_size)):
                 batch = df.slice(i, self.config.batch_size)
                 papers = batch.to_dicts()
-                
-                # # Preprocess authors and generate author nodes
-                # for paper in papers:
-                #     authors_parsed = paper.get('authors_parsed', [])
-                #     authors = []
-                #     for author in authors_parsed:
-                #         last_name = author[0]
-                #         first_name = author[1]
-                #         # Create full name
-                #         full_name = f"{first_name} {last_name}".strip()
-                #         # Generate a unique author ID
-                #         author_id = f"{last_name}_{first_name}".replace(' ', '_')
-                #         authors.append({
-                #             'author_id': author_id,
-                #             'name': full_name
-                #         })
-                #     paper['authors'] = authors  # Replace authors_parsed with processed authors
 
                 # Create paper and author nodes
                 with self.driver.session() as session:
