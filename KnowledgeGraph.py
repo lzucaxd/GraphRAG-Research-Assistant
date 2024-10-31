@@ -75,7 +75,12 @@ class MistralKGBuilder:
                     FOR (e:Entity) REQUIRE e.id IS UNIQUE
                 """)
                 
-                logger.info("Database initialized successfully")
+                # Create constraints for Authors
+                session.run("""
+                    CREATE CONSTRAINT IF NOT EXISTS
+                    FOR (a:Author)
+                    REQUIRE a.author_id IS UNIQUE
+                """)
                 
         except Exception as e:
             logger.error(f"Database initialization error: {str(e)}")
@@ -96,22 +101,27 @@ class MistralKGBuilder:
             
             # Load tokenizer
             logger.info("Loading tokenizer...")
-            tokenizer = AutoTokenizer.from_pretrained(
-                self.config.model_id,
-                token=self.hf_token,
-                trust_remote_code=True,
-                use_fast=False  # Use slow tokenizer for compatibility
-
-            )
-            
-            logger.info("Tokenizer loaded successfully")
-            
-            tokenizer.padding_side = 'left'
-            if tokenizer.pad_token is None:
-                tokenizer.pad_token = tokenizer.eos_token
+            try:
+                tokenizer = AutoTokenizer.from_pretrained(
+                    self.config.model_id,
+                    token=self.hf_token,
+                    use_fast=False,  # Changed to False for better compatibility
+                    padding_side='left'
+                )
                 
-            logger.info(f"Tokenizer padding side: {tokenizer.padding_side}")
-            logger.info(f"Pad token: {tokenizer.pad_token}")
+                logger.info("Tokenizer loaded successfully")
+                
+                # Set pad token if needed
+                if tokenizer.pad_token is None:
+                    tokenizer.pad_token = tokenizer.eos_token
+                    logger.info("Set pad token to eos token")
+                
+                logger.info(f"Tokenizer padding side: {tokenizer.padding_side}")
+                logger.info(f"Pad token: {tokenizer.pad_token}")
+
+            except Exception as e:
+                logger.error(f"Tokenizer initialization error: {str(e)}")
+                raise RuntimeError(f"Failed to initialize tokenizer: {str(e)}")
             # Load model with M1 optimizations
             logger.info("Loading model...")
             model = AutoModelForCausalLM.from_pretrained(
@@ -172,156 +182,195 @@ class MistralKGBuilder:
             raise
     
     def process_abstract(self, abstract: str) -> dict:
-        """Extract entities and relationships using Mistral with enhanced debug logging"""
-        prompt = f"""<s>[INST] Extract key entities and their relationships from this scientific abstract.
-        You must respond with ONLY valid JSON, properly formatted with double quotes.
-        
-        Abstract: {abstract}
-        
-        Format your response EXACTLY like this example, with no other text:
-        {{
-            "entities": [
-                {{
-                    "id": "e1",
-                    "name": "machine learning",
-                    "type": "technology"
-                }}
-            ],
-            "relationships": [
-                {{
-                    "source": "e1",
-                    "target": "e2",
-                    "type": "uses"
-                }}
-            ]
-        }} [/INST]</s>"""
-        
+        """Extract entities and relationships from an abstract with domain-agnostic prompt."""
+        prompt = f"""[INST] Extract the key scientific entities and their relationships from this abstract. Include:
+    - Main concepts, theories, or principles
+    - Methods, techniques, or approaches
+    - Objects of study or materials
+    - Observed phenomena or results
+    - Tools, measurements, or metrics used
+
+    Rules:
+    1. Respond with ONLY valid JSON - no other text or explanations
+    2. Entity types should be general categories like "Concept", "Method", "Theory", "Material", "Phenomenon", "Metric"
+    3. Use clear relationship types like "uses", "affects", "measures", "describes", "derives_from", "part_of"
+    4. Entity names should preserve any technical notation or symbols
+    5. Each entity must have a unique ID starting with "e" followed by a number
+    6. Every relationship must connect existing entity IDs
+
+    Abstract: "{abstract}"
+
+    Expected JSON format:
+    {{
+        "entities": [
+            {{
+                "id": "e1",
+                "name": "Riemann Hypothesis",
+                "type": "Theory"
+            }},
+            {{
+                "id": "e2",
+                "name": "zeta function zeros",
+                "type": "Concept"
+            }},
+            {{
+                "id": "e3",
+                "name": "quantum energy levels",
+                "type": "Phenomenon"
+            }}
+        ],
+        "relationships": [
+            {{
+                "source": "e1",
+                "target": "e2",
+                "type": "describes"
+            }},
+            {{
+                "source": "e2",
+                "target": "e3",
+                "type": "analogous_to"
+            }}
+        ]
+    }} [/INST]"""
+
         try:
-            # Clear GPU memory before inference
-            if hasattr(torch.cuda, 'empty_cache'):
-                torch.cuda.empty_cache()
-            
-            # Get model response
+            # Get model response with deterministic settings
             response = self.pipe(
                 prompt,
-                max_new_tokens=500,
-                temperature=self.config.temperature,
-                do_sample=True,
-                top_p=0.95,
+                max_new_tokens=800,
+                do_sample=False,
+                top_p=1.0,
                 repetition_penalty=1.15,
                 pad_token_id=self.pipe.tokenizer.pad_token_id
             )[0]['generated_text']
             
-            logger.debug("Raw model response:")
-            logger.debug(response)
+            logger.info("Raw model response:")
+            logger.info(response)
             
-            # Extract JSON portion
-            json_text = response.split('[/INST]')[-1].strip()
-            logger.debug("Extracted JSON text:")
-            logger.debug(json_text)
             
-            def clean_json_text(text):
-                # Find JSON boundaries
-                start = text.find('{')
-                end = text.rfind('}') + 1
+            def clean_json_text(text: str) -> str:
+                """Clean and fix JSON string from model response with enhanced handling."""
+            #     import re
+
+            #     # Handle instruction markers and extract JSON portion
+                parts = text.split('[/INST]')
+                text = parts[-1].strip() if len(parts) > 1 else text
                 
-                if start == -1 or end == 0:
-                    logger.warning("No JSON structure found in response")
-                    return "{}"
+            #     # Find the outermost JSON structure
+            #     json_start = text.find('{')
+            #     json_end = text.rfind('}') + 1
+            #     if json_start == -1 or json_end == 0:
+            #         logger.warning("No JSON structure found in response")
+            #         return "{}"
                 
-                # Extract JSON portion
-                text = text[start:end]
-                logger.debug("JSON after boundary extraction:")
-                logger.debug(text)
+            #     text = text[json_start:json_end]
+
+            #     # Basic cleanups
+            #     text = text.replace("'", '"')  # Replace single quotes
+            #     text = ''.join(char for char in text if ord(char) >= 32)  # Remove non-printable chars
+
+            #     # Fix common JSON issues
+            #     def fix_quotes(match):
+            #         # Handle nested quotes in string values
+            #         inner_text = match.group(1)
+            #         # Escape any unescaped double quotes
+            #         inner_text = inner_text.replace('"', '\\"')
+            #         return f'"{inner_text}"'
+
+            #     # Fix quoted values with nested quotes
+            #     text = re.sub(r'"((?:[^"\\]|\\.)*)"(?=,|\s*})', fix_quotes, text)
                 
-                # Remove any leading/trailing whitespace
-                text = text.strip()
+            #     # Fix unquoted property names
+            #     text = re.sub(r'(\w+):', r'"\1":', text)
                 
-                # Replace single quotes with double quotes
-                text = text.replace("'", '"')
+            #     # Remove any trailing commas before closing brackets
+            #     text = re.sub(r',(\s*[}\]])', r'\1', text)
                 
-                # Fix property names
-                text = re.sub(r'([{,]\s*)(\w+)(\s*:)', r'\1"\2"\3', text)
-                
-                # Remove trailing commas
-                text = re.sub(r',(\s*[}\]])', r'\1', text)
-                
-                # Remove newlines and extra spaces
-                text = re.sub(r'\s+', ' ', text)
-                
-                # Fix common formatting issues
-                text = text.replace('"{', '{').replace('}"', '}')
-                text = text.replace('[]', '""')
-                
-                logger.debug("Cleaned JSON:")
-                logger.debug(text)
-                
+            #     return text
                 return text
             
-            cleaned_json = clean_json_text(json_text)
-            
+            cleaned_json = clean_json_text(response)
+            logger.info("Cleaned JSON text:")
+            logger.info(cleaned_json)
+
             try:
                 parsed_data = json.loads(cleaned_json)
-                logger.debug("Successfully parsed JSON:")
-                logger.debug(parsed_data)
-                
             except json.JSONDecodeError as e:
                 logger.error(f"JSON parsing error: {str(e)}")
                 logger.error(f"Problem JSON: {cleaned_json}")
                 logger.error(f"Error position: character {e.pos}")
                 logger.error(f"Line {e.lineno}, column {e.colno}")
                 
-                # Try parsing with more lenient cleaning
+                # Advanced recovery attempts
                 try:
-                    # Remove all whitespace and try again
+                    # Try with all whitespace removed
                     stripped_json = re.sub(r'\s', '', cleaned_json)
                     parsed_data = json.loads(stripped_json)
                     logger.info("Succeeded parsing with stripped whitespace")
                 except:
-                    logger.error("Failed even with stripped whitespace")
-                    return {"entities": [], "relationships": []}
-            
-            # Validate structure
+                    try:
+                        # Try with relaxed JSON parsing using ast.literal_eval
+                        import ast
+                        parsed_data = ast.literal_eval(cleaned_json)
+                        logger.info("Succeeded parsing with ast.literal_eval")
+                    except:
+                        logger.error("All parsing attempts failed")
+                        return {"entities": [], "relationships": []}
+
+            # Validate and normalize structure
             if not isinstance(parsed_data, dict):
                 logger.warning("Parsed data is not a dictionary")
                 return {"entities": [], "relationships": []}
-            
-            # Ensure required keys exist
+
             parsed_data.setdefault('entities', [])
             parsed_data.setdefault('relationships', [])
-            
-            # Validate entities
+
+            # Enhanced entity validation with type normalization
             valid_entities = []
             entity_ids = set()
             for entity in parsed_data['entities']:
                 if isinstance(entity, dict):
                     try:
+                        # Normalize entity type
+                        entity_type = str(entity.get('type', 'unknown')).strip()
+                        if not entity_type:
+                            entity_type = 'unknown'
+                        
+                        # Generate sequential ID if missing
+                        entity_id = str(entity.get('id', f'e{len(entity_ids)+1}'))
+                        
                         valid_entity = {
-                            'id': str(entity.get('id', f'e{len(entity_ids)+1}')),
-                            'name': str(entity.get('name', 'unnamed')),
-                            'type': str(entity.get('type', 'unknown'))
+                            'id': entity_id,
+                            'name': str(entity.get('name', 'unnamed')).strip(),
+                            'type': entity_type
                         }
                         valid_entities.append(valid_entity)
-                        entity_ids.add(valid_entity['id'])
+                        entity_ids.add(entity_id)
                     except Exception as e:
-                        logger.warning(f"Error processing entity: {entity}")
+                        logger.warning(f"Error processing entity: {entity}, Error: {str(e)}")
                         continue
-            
-            # Validate relationships
+
+            # Enhanced relationship validation with type normalization
             valid_relationships = []
             for rel in parsed_data['relationships']:
                 if isinstance(rel, dict):
                     try:
-                        if rel.get('source') in entity_ids and rel.get('target') in entity_ids:
+                        source = str(rel.get('source', '')).strip()
+                        target = str(rel.get('target', '')).strip()
+                        if source in entity_ids and target in entity_ids:
+                            rel_type = str(rel.get('type', 'related_to')).strip()
+                            if not rel_type:
+                                rel_type = 'related_to'
+                            
                             valid_relationships.append({
-                                'source': str(rel['source']),
-                                'target': str(rel['target']),
-                                'type': str(rel.get('type', 'related_to'))
+                                'source': source,
+                                'target': target,
+                                'type': rel_type
                             })
                     except Exception as e:
-                        logger.warning(f"Error processing relationship: {rel}")
+                        logger.warning(f"Error processing relationship: {rel}, Error: {str(e)}")
                         continue
-            
+
             result = {
                 "entities": valid_entities,
                 "relationships": valid_relationships
@@ -330,7 +379,7 @@ class MistralKGBuilder:
             logger.debug("Final validated output:")
             logger.debug(result)
             return result
-                
+
         except Exception as e:
             logger.error(f"Error in process_abstract: {str(e)}")
             if 'response' in locals():
@@ -343,44 +392,70 @@ class MistralKGBuilder:
             # Read papers efficiently using Polars
             if input_path.endswith('.json'):
                 df = pl.read_ndjson(input_path)
-            elif input_path.endswith('.csv'):
-                df = pl.scan_csv(input_path)
-            elif input_path.endswith('.parquet'):
-                df = pl.scan_parquet(input_path)
-            else:
-                raise ValueError("Unsupported file format. Use JSON, CSV, or Parquet.")
             
             # Apply limit if specified
             if limit:
                 df = df.limit(limit)
             
-            # Collect necessary columns
-            df = df.select(['id', 'title', 'abstract'])
+            # Include authors_parsed column
+            df = df.select(['id', 'title', 'abstract', 'authors_parsed'])
             logger.info(f"Processing {len(df)} papers")
             
             # Process in batches
             for i in tqdm(range(0, len(df), self.config.batch_size)):
                 batch = df.slice(i, self.config.batch_size)
+                papers = batch.to_dicts()
                 
-                # Create paper nodes
+                # # Preprocess authors and generate author nodes
+                # for paper in papers:
+                #     authors_parsed = paper.get('authors_parsed', [])
+                #     authors = []
+                #     for author in authors_parsed:
+                #         last_name = author[0]
+                #         first_name = author[1]
+                #         # Create full name
+                #         full_name = f"{first_name} {last_name}".strip()
+                #         # Generate a unique author ID
+                #         author_id = f"{last_name}_{first_name}".replace(' ', '_')
+                #         authors.append({
+                #             'author_id': author_id,
+                #             'name': full_name
+                #         })
+                #     paper['authors'] = authors  # Replace authors_parsed with processed authors
+
+                # Create paper and author nodes
                 with self.driver.session() as session:
                     session.run("""
                         UNWIND $papers as paper
+                        // Create Paper node
                         MERGE (p:Paper {id: paper.id})
                         SET p.title = paper.title,
                             p.abstract = paper.abstract
-                        """, papers=batch.to_dicts())
-                
+                        
+                        // Create Author nodes and relationships from parsed authors
+                        WITH p, paper
+                        UNWIND paper.authors_parsed as author_data
+                        MERGE (a:Author { 
+                                author_id: reduce(s = author_data[0], x IN tail(author_data) | s + '_' + x) 
+                        })
+                        SET a.last_name = author_data[0],
+                            a.first_name = author_data[1],
+                            a.full_name = CASE 
+                                WHEN author_data[1] = '' 
+                                THEN author_data[0]
+                                ELSE author_data[1] + ' ' + author_data[0]
+                            END
+                        MERGE (a)-[:AUTHORED]->(p)
+                        """, papers=papers)
+
                 # Process abstracts and create graph
-                for paper in batch.to_dicts():
+                for paper in papers:
                     extracted = self.process_abstract(paper['abstract'])
                     if extracted['entities'] or extracted.get('relationships'):
                         self.create_graph_nodes(paper['id'], extracted)
-                
-                # Clear memory after each batch
-                if hasattr(torch.cuda, 'empty_cache'):
-                    torch.cuda.empty_cache()
-                
+                        
+            logger.info("Paper processing complete")
+                    
         except Exception as e:
             logger.error(f"Error processing papers: {str(e)}")
             raise
