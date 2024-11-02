@@ -49,7 +49,8 @@ class MistralKGBuilder:
             auth=(
                 os.getenv("NEO4J_USER", "neo4j"),
                 neo4j_password
-            )
+            ),
+            database=os.getenv("NEO4J_DATABASE", "neo4j")
         )
         
         # Initialize database first
@@ -60,31 +61,32 @@ class MistralKGBuilder:
         self.setup_model()
     
     def init_database(self):
-        """Setup Neo4j constraints"""
-        try:
-            with self.driver.session() as session:
-                # Create constraints for Papers
-                session.run("""
-                    CREATE CONSTRAINT paper_id IF NOT EXISTS 
-                    FOR (p:Paper) REQUIRE p.id IS UNIQUE
-                """)
-                
-                # Create constraints for Entities
-                session.run("""
-                    CREATE CONSTRAINT entity_id IF NOT EXISTS 
-                    FOR (e:Entity) REQUIRE e.id IS UNIQUE
-                """)
-                
-                # Create constraints for Authors
-                session.run("""
-                    CREATE CONSTRAINT IF NOT EXISTS
-                    FOR (a:Author)
-                    REQUIRE a.author_id IS UNIQUE
-                """)
-                
-        except Exception as e:
-            logger.error(f"Database initialization error: {str(e)}")
-            raise RuntimeError(f"Failed to initialize database: {str(e)}")
+            """Setup Neo4j constraints with namespace support"""
+            try:
+                with self.driver.session() as session:
+                    # Create constraints for Papers with namespace
+                    session.run("""
+                        CREATE CONSTRAINT paper_namespace_id IF NOT EXISTS 
+                        FOR (p:Paper) REQUIRE (p.namespace, p.id) IS UNIQUE
+                    """)
+                    
+                    # Create constraints for Entities with namespace
+                    session.run("""
+                        CREATE CONSTRAINT entity_namespace_id IF NOT EXISTS 
+                        FOR (e:Entity) REQUIRE (e.namespace, e.id) IS UNIQUE
+                    """)
+                    
+                    # Create constraints for Authors with namespace
+                    session.run("""
+                        CREATE CONSTRAINT author_namespace_id IF NOT EXISTS
+                        FOR (a:Author) REQUIRE (a.namespace, a.author_id) IS UNIQUE
+                    """)
+                    
+                    logger.info("Created namespace-aware constraints")
+                    
+            except Exception as e:
+                logger.error(f"Database initialization error: {str(e)}")
+                raise RuntimeError(f"Failed to initialize database: {str(e)}")
     
     def setup_model(self):
         """Initialize Mistral with M1 optimizations"""
@@ -146,35 +148,45 @@ class MistralKGBuilder:
             logger.error(f"Error during model setup: {str(e)}")
             raise RuntimeError(f"Failed to initialize model: {str(e)}")
     
-    def create_graph_nodes(self, paper_id: str, data: dict):
-        """Create nodes and relationships in Neo4j"""
-        try:
-            with self.driver.session() as session:
-                # Create entities and their relationships to papers
-                if data['entities']:
-                    session.run("""
-                        MATCH (p:Paper {id: $paper_id})
-                        UNWIND $entities as entity
-                        MERGE (e:Entity {id: entity.id})
-                        SET e.name = entity.name,
-                            e.type = entity.type
-                        MERGE (p)-[:MENTIONS]->(e)
-                        """, paper_id=paper_id, entities=data['entities'])
-                
-                # Create relationships between entities
-                if data.get('relationships'):
-                    session.run("""
-                        UNWIND $relationships as rel
-                        MATCH (e1:Entity {id: rel.source})
-                        MATCH (e2:Entity {id: rel.target})
-                        MERGE (e1)-[r:RELATES_TO {type: rel.type}]->(e2)
-                        """, relationships=data['relationships'])
-                        
-                logger.debug(f"Created graph nodes for paper {paper_id}")
-                
-        except Exception as e:
-            logger.error(f"Error creating graph nodes for paper {paper_id}: {str(e)}")
-            raise
+    def create_graph_nodes(self, paper_id: str, data: dict, namespace: str):
+            """Create nodes and relationships in Neo4j with namespace"""
+            try:
+                with self.driver.session() as session:
+                    # Create entities and their relationships to papers
+                    if data['entities']:
+                        session.run("""
+                            MATCH (p:Paper {id: $paper_id, namespace: $namespace})
+                            UNWIND $entities as entity
+                            MERGE (e:Entity {id: entity.id, namespace: $namespace})
+                            SET e.name = entity.name,
+                                e.type = entity.type
+                            MERGE (p)-[:MENTIONS {namespace: $namespace}]->(e)
+                            """, 
+                            paper_id=paper_id, 
+                            entities=data['entities'],
+                            namespace=namespace
+                        )
+                    
+                    # Create relationships between entities
+                    if data.get('relationships'):
+                        session.run("""
+                            UNWIND $relationships as rel
+                            MATCH (e1:Entity {id: rel.source, namespace: $namespace})
+                            MATCH (e2:Entity {id: rel.target, namespace: $namespace})
+                            MERGE (e1)-[r:RELATES_TO {
+                                type: rel.type,
+                                namespace: $namespace
+                            }]->(e2)
+                            """, 
+                            relationships=data['relationships'],
+                            namespace=namespace
+                        )
+                            
+                    logger.debug(f"Created graph nodes for paper {paper_id} in namespace {namespace}")
+                    
+            except Exception as e:
+                logger.error(f"Error creating graph nodes for paper {paper_id} in namespace {namespace}: {str(e)}")
+                raise
     
     def process_abstract(self, abstract: str) -> dict:
         """Extract entities and relationships from an abstract with domain-agnostic prompt."""
@@ -342,40 +354,63 @@ class MistralKGBuilder:
                 logger.error(f"Raw response was: {response}")
             return {"entities": [], "relationships": []}
     
-    def process_papers(self, input_path: str, limit: int = None):
-        """Process papers and build knowledge graph"""
+    def process_papers(self, input_path: str, namespace: str, limit: int = None):
+        """Process papers and build knowledge graph with namespace support"""
         try:
-            # Read papers efficiently using Polars
-            if input_path.endswith('.json'):
-                df = pl.read_ndjson(input_path)
+            logger.info(f"Processing papers for namespace: {namespace}")
+            
+            # Read papers with explicit schema
+            df = pl.read_ndjson(
+                input_path,
+                schema={
+                    'id': pl.String,
+                    'title': pl.String,
+                    'abstract': pl.String,
+                    'authors_parsed': pl.List(pl.List(pl.String))
+                }
+            )
             
             # Apply limit if specified
             if limit:
                 df = df.limit(limit)
             
-            # Include authors_parsed column
-            df = df.select(['id', 'title', 'abstract', 'authors_parsed'])
-            logger.info(f"Processing {len(df)} papers")
+            logger.info(f"Processing {len(df)} papers in namespace {namespace}")
             
             # Process in batches
             for i in tqdm(range(0, len(df), self.config.batch_size)):
                 batch = df.slice(i, self.config.batch_size)
-                papers = batch.to_dicts()
-
-                # Create paper and author nodes
+                
+                # Convert to dict with proper handling of nested structures
+                papers = [{
+                    'id': row['id'],
+                    'title': row['title'],
+                    'abstract': row['abstract'],
+                    'authors_parsed': [
+                        [str(name) for name in author] 
+                        for author in row['authors_parsed']
+                    ]
+                } for row in batch.iter_rows(named=True)]
+                
+                # Create paper and author nodes with namespace
                 with self.driver.session() as session:
                     session.run("""
                         UNWIND $papers as paper
                         // Create Paper node
-                        MERGE (p:Paper {id: paper.id})
+                        MERGE (p:Paper {id: paper.id, namespace: $namespace})
                         SET p.title = paper.title,
                             p.abstract = paper.abstract
                         
                         // Create Author nodes and relationships from parsed authors
                         WITH p, paper
                         UNWIND paper.authors_parsed as author_data
+                        WITH p, author_data, 
+                             REDUCE(s = author_data[0], 
+                                   idx IN RANGE(1, SIZE(author_data)-1) | 
+                                   s + '_' + author_data[idx]
+                             ) as author_id
                         MERGE (a:Author { 
-                                author_id: reduce(s = author_data[0], x IN tail(author_data) | s + '_' + x) 
+                            author_id: author_id,
+                            namespace: $namespace
                         })
                         SET a.last_name = author_data[0],
                             a.first_name = author_data[1],
@@ -384,19 +419,22 @@ class MistralKGBuilder:
                                 THEN author_data[0]
                                 ELSE author_data[1] + ' ' + author_data[0]
                             END
-                        MERGE (a)-[:AUTHORED]->(p)
-                        """, papers=papers)
+                        MERGE (a)-[:AUTHORED {namespace: $namespace}]->(p)
+                        """, 
+                        papers=papers,
+                        namespace=namespace
+                    )
 
                 # Process abstracts and create graph
                 for paper in papers:
                     extracted = self.process_abstract(paper['abstract'])
                     if extracted['entities'] or extracted.get('relationships'):
-                        self.create_graph_nodes(paper['id'], extracted)
+                        self.create_graph_nodes(paper['id'], extracted, namespace)
                         
-            logger.info("Paper processing complete")
+            logger.info(f"Paper processing complete for namespace {namespace}")
                     
         except Exception as e:
-            logger.error(f"Error processing papers: {str(e)}")
+            logger.error(f"Error processing papers in namespace {namespace}: {str(e)}")
             raise
 
 if __name__ == "__main__":
@@ -408,7 +446,8 @@ if __name__ == "__main__":
         # Process a small test batch
         logger.info("Starting paper processing...")
         builder.process_papers(
-            "/Users/agastyadas/Documents/NEU\ Grad/Fall\ \'\ 24/FAI/FinalProjectRAG/cs5100_researchRAG_FinalProj/datasets/arxiv_cs_metadata.json",
+            "./datasets/arxiv_cs_metadata.json",
+            namespace="arxiv_cs1",
             limit=20  # Start with 5 papers as a test
         )
         

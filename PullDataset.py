@@ -1,49 +1,100 @@
 import polars as pl
-import kagglehub
 import os
 import json
+import logging
+from typing import List
 
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
 
-
-# class DatasetLoader:
-#     def __init__(self, dataset_name: str):
-#         self.dataset_name = dataset_name
-#         self.dataset_path = self.download_dataset()
-
-#     def download_dataset(self):
-#         """Download the dataset from Kaggle"""
-#         path = kagglehub.dataset_download(self.dataset_name)
-#         print("Path to dataset files:", path)
-#         return path
-
-#     def load_data(self, file_name: str) -> pl.DataFrame:
-#         """Load data from a specified file"""
-#         return pl.read_ndjson(file_name)
-
-#     def filter_data(self, df: pl.DataFrame, category_pattern: str) -> pl.DataFrame:
-#         """Filter data based on category pattern"""
-#         return df.filter(pl.col("categories").str.contains(category_pattern, strict=True))
-# # Download latest version
-# path = kagglehub.dataset_download("Cornell-University/arxiv")
-
-# print("Path to dataset files:", path)
-
+# Constants
 DATASET_PATH = "/Users/agastyadas/.cache/kagglehub/datasets/Cornell-University/arxiv/versions/203"
-# Loading the entire JSON dataset from the input file path
-cs_arxiv_df = pl.read_ndjson(DATASET_PATH + "/arxiv-metadata-oai-snapshot.json")
+INPUT_FILE = "arxiv-metadata-oai-snapshot.json"
+OUTPUT_FILE = "datasets/arxiv_cs_metadata.json"
+CS_CATEGORIES = ['cs.CV', 'cs.LG', 'cs.CL', 'cs.AI', 'cs.NE', 'cs.RO']
 
+def clean_paper_data(row: dict) -> dict:
+    """Clean and validate a single paper's data"""
+    # Clean authors data
+    authors_parsed = row.get('authors_parsed', [])
+    if not isinstance(authors_parsed, list) or not authors_parsed:
+        authors_parsed = [["Unknown", "", ""]]
+    else:
+        # Clean each author entry while preserving original structure
+        cleaned_authors = []
+        for author in authors_parsed:
+            if isinstance(author, list):
+                # Just clean the strings without modifying the structure
+                author_entry = [str(name).strip() if name else "" for name in author]
+                cleaned_authors.append(author_entry)
+        authors_parsed = cleaned_authors if cleaned_authors else [["Unknown", "", ""]]
 
-# Filtering rows where the 'categories' column contains specific computer science categories
-cs_arxiv_df_filtered = cs_arxiv_df.filter(pl.col("categories").str.contains(r"\b(?:cs\.(?:CV|LG|CL|AI|NE|RO))\b", strict=True))
-print(cs_arxiv_df_filtered['abstract'][0])
+    return {
+        'id': str(row.get('id', '')).strip(),
+        'title': str(row.get('title', '')).strip(),
+        'abstract': str(row.get('abstract', '')).strip(),
+        'authors_parsed': authors_parsed
+    }
 
-
+# Create output directory if it doesn't exist
 os.makedirs('datasets', exist_ok=True)
 
 try:
-    # Convert to JSON format and write to file
-    json_path = 'datasets/arxiv_cs_metadata.json'
-    cs_arxiv_df_filtered.write_json(json_path)
-    print(f"Successfully wrote data to {json_path}")
+    # Read the dataset
+    logger.info("Reading ArXiv dataset...")
+    input_path = os.path.join(DATASET_PATH, INPUT_FILE)
+    df = pl.read_ndjson(input_path)
+    
+    # Create category pattern for filtering
+    pattern = r"\b(?:" + "|".join(CS_CATEGORIES).replace(".", r"\.") + r")\b"
+    
+    # Filter for CS categories
+    logger.info("Filtering CS papers...")
+    filtered_df = df.filter(pl.col("categories").str.contains(pattern, strict=True))
+    
+    # Select and clean needed columns
+    logger.info("Processing papers...")
+    processed_records = []
+    
+    # Process each row
+    for row in filtered_df.iter_rows(named=True):
+        try:
+            cleaned_record = clean_paper_data(row)
+            if all(cleaned_record.values()):  # Ensure no empty values
+                processed_records.append(cleaned_record)
+        except Exception as e:
+            logger.warning(f"Error processing paper {row.get('id', 'unknown')}: {str(e)}")
+            continue
+    
+    # Write the cleaned records to file
+    logger.info(f"Writing {len(processed_records)} papers to {OUTPUT_FILE}...")
+    with open(OUTPUT_FILE, 'w', encoding='utf-8') as f:
+        for record in processed_records:
+            json.dump(record, f, ensure_ascii=False)
+            f.write('\n')
+    
+    logger.info("Successfully completed preprocessing!")
+    logger.info(f"Processed papers: {len(processed_records)}")
+
 except Exception as e:
-    print(f"Error writing JSON file: {e}")
+    logger.error(f"Error during preprocessing: {str(e)}")
+    raise
+
+# Verify the output
+try:
+    # Try reading back the processed file to verify
+    test_df = pl.read_ndjson(OUTPUT_FILE)
+    logger.info(f"Verification successful. Output file contains {len(test_df)} papers.")
+    
+    # Show sample of the data
+    if len(test_df) > 0:
+        sample = test_df.head(1).to_dicts()[0]
+        logger.info("Sample paper structure:")
+        logger.info(json.dumps(sample, indent=2))
+
+except Exception as e:
+    logger.error(f"Error verifying output file: {str(e)}")
