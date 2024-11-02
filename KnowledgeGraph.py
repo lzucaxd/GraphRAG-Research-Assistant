@@ -408,8 +408,8 @@ if __name__ == "__main__":
         # Process a small test batch
         logger.info("Starting paper processing...")
         builder.process_papers(
-            "/Users/agastyadas/.cache/kagglehub/datasets/Cornell-University/arxiv/versions/203/arxiv-metadata-oai-snapshot.json",
-            limit=5  # Start with 5 papers as a test
+            "/Users/agastyadas/Documents/NEU\ Grad/Fall\ \'\ 24/FAI/FinalProjectRAG/cs5100_researchRAG_FinalProj/datasets/arxiv_cs_metadata.json",
+            limit=20  # Start with 5 papers as a test
         )
         
     except Exception as e:

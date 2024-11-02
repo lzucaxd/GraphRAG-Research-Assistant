@@ -1,5 +1,9 @@
 import polars as pl
 import kagglehub
+import os
+import json
+
+
 
 # class DatasetLoader:
 #     def __init__(self, dataset_name: str):
@@ -33,3 +37,13 @@ cs_arxiv_df = pl.read_ndjson(DATASET_PATH + "/arxiv-metadata-oai-snapshot.json")
 cs_arxiv_df_filtered = cs_arxiv_df.filter(pl.col("categories").str.contains(r"\b(?:cs\.(?:CV|LG|CL|AI|NE|RO))\b", strict=True))
 print(cs_arxiv_df_filtered['abstract'][0])
 
+
+os.makedirs('datasets', exist_ok=True)
+
+try:
+    # Convert to JSON format and write to file
+    json_path = 'datasets/arxiv_cs_metadata.json'
+    cs_arxiv_df_filtered.write_json(json_path)
+    print(f"Successfully wrote data to {json_path}")
+except Exception as e:
+    print(f"Error writing JSON file: {e}")

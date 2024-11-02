@@ -2,3 +2,4 @@
 /kg_builder.log
 /.env
 /.conda
+.DS_Store
