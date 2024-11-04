@@ -3,3 +3,4 @@
 /.env
 /.conda
 .DS_Store
+/datasets/*
