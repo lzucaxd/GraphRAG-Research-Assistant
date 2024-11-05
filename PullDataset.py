@@ -33,6 +33,7 @@ def clean_paper_data(row: dict) -> dict:
                 cleaned_authors.append(author_entry)
         authors_parsed = cleaned_authors if cleaned_authors else [["Unknown", "", ""]]
 
+    #TODO handle other values
     return {
         'id': str(row.get('id', '')).strip(),
         'title': str(row.get('title', '')).strip(),
