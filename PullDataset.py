@@ -16,6 +16,8 @@ DATASET_PATH = "/Users/agastyadas/.cache/kagglehub/datasets/Cornell-University/a
 INPUT_FILE = "arxiv-metadata-oai-snapshot.json"
 OUTPUT_FILE = "datasets/arxiv_cs_metadata.json"
 CS_CATEGORIES = ['cs.CV', 'cs.LG', 'cs.CL', 'cs.AI', 'cs.NE', 'cs.RO']
+COLS = ["id", "submitter", "authors", "title", "comments", "journal-ref", "doi", "report-no?", "categories", "license?", "abstract", "versions", "update_date", "authors_parsed"]
+FILTERED_COLS = ["id", "submitter", "authors", "title", "comments", "journal-ref", "doi", "report-no?", "categories", "license?", "abstract", "versions", "update_date"]
 
 def clean_paper_data(row: dict) -> dict:
     """Clean and validate a single paper's data"""
@@ -28,16 +30,43 @@ def clean_paper_data(row: dict) -> dict:
         cleaned_authors = []
         for author in authors_parsed:
             if isinstance(author, list):
-                # Just clean the strings without modifying the structure
                 author_entry = [str(name).strip() if name else "" for name in author]
                 cleaned_authors.append(author_entry)
         authors_parsed = cleaned_authors if cleaned_authors else [["Unknown", "", ""]]
 
-    #TODO handle other values
+    # Clean versions data
+    versions = row.get('versions', [])
+    if not isinstance(versions, list):
+        versions = []
+    cleaned_versions = []
+    for version in versions:
+        if isinstance(version, dict):
+            cleaned_version = {
+                'version': str(version.get('version', '')).strip(),
+                'created': str(version.get('created', '')).strip()
+            }
+            cleaned_versions.append(cleaned_version)
+
+    # Helper function to clean string fields
+    def clean_string_field(value):
+        if value is None or value == "None":
+            return ""
+        return str(value).strip()
+
     return {
         'id': str(row.get('id', '')).strip(),
+        'submitter': str(row.get('submitter', '')).strip(),
+        'authors': str(row.get('authors', '')).strip(),
         'title': str(row.get('title', '')).strip(),
+        'comments': str(row.get('comments', '')).strip(),
+        'journal-ref': clean_string_field(row.get('journal-ref')),
+        'doi': clean_string_field(row.get('doi')),
+        'report-no': clean_string_field(row.get('report-no')),
+        'categories': str(row.get('categories', '')).strip(),
+        'license': str(row.get('license', '')).strip(),
         'abstract': str(row.get('abstract', '')).strip(),
+        'versions': cleaned_versions,
+        'update_date': str(row.get('update_date', '')).strip(),
         'authors_parsed': authors_parsed
     }
 
