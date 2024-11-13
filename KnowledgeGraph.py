@@ -4,7 +4,9 @@ from llama_index.core import Document, PropertyGraphIndex
 from llama_index.llms.ollama import Ollama
 from llama_index.graph_stores.neo4j import Neo4jPropertyGraphStore
 from llama_index.core.indices.property_graph import DynamicLLMPathExtractor
+from llama_index.core.schema import MetadataMode
 from llama_index.core import StorageContext
+from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from dataclasses import dataclass
 
 class Neo4jConfig:
@@ -42,6 +44,7 @@ class LlamaIndexKGBuilder:
         self,
         neo4j_config: Neo4jConfig,
         llm_model: str = "mistral",
+        embed_model: str = "sentence-transformers/all-MiniLM-L6-v2",
         request_timeout: float = 300.0,
         extractor_config: Optional[ExtractorConfig] = None
     ):
@@ -56,6 +59,8 @@ class LlamaIndexKGBuilder:
         """
         self.neo4j_config = neo4j_config
         self.llm = Ollama(model=llm_model, request_timeout=request_timeout)
+        self.embed_model = HuggingFaceEmbedding(embed_model)
+
         self.extractor_config = extractor_config or ExtractorConfig()
         
         # Initialize Neo4j graph store
@@ -115,7 +120,14 @@ class LlamaIndexKGBuilder:
             Document(text=f"{row['title']}: {row['abstract']}")
             for _, row in papers.iterrows()
         ]
-        
+        for document in documents:
+            print(
+                "The LLM sees this: \n",
+                document.get_content(metadata_mode=MetadataMode.LLM),
+                "Relationships: ",
+                document.relationships
+            )
+
         # Build and return the knowledge graph
         return self.build_graph(documents)
 
@@ -162,7 +174,8 @@ class LlamaIndexKGBuilder:
             documents,
             property_graph_store=self.graph_store,
             llm=self.llm,
-            embed_kg_nodes=False,
+            embed_model=self.embed_model,
+            embed_kg_nodes=True,
             kg_extractors=[self.kg_extractor],
             show_progress=True
         )
