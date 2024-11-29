@@ -1,3 +1,9 @@
 llama_index==0.11.21
 pandas==2.2.3
 polars==1.12.0
+llama-index-graph-stores-neo4j
+graspologic
+numpy==1.24.4
+scipy==1.12.0 
+future
+backoff
