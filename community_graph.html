@@ -44,75 +44,6 @@
              }
 
              
-             #loadingBar {
-                 position:absolute;
-                 top:0px;
-                 left:0px;
-                 width: 100%;
-                 height: 600px;
-                 background-color:rgba(200,200,200,0.8);
-                 -webkit-transition: all 0.5s ease;
-                 -moz-transition: all 0.5s ease;
-                 -ms-transition: all 0.5s ease;
-                 -o-transition: all 0.5s ease;
-                 transition: all 0.5s ease;
-                 opacity:1;
-             }
-
-             #bar {
-                 position:absolute;
-                 top:0px;
-                 left:0px;
-                 width:20px;
-                 height:20px;
-                 margin:auto auto auto auto;
-                 border-radius:11px;
-                 border:2px solid rgba(30,30,30,0.05);
-                 background: rgb(0, 173, 246); /* Old browsers */
-                 box-shadow: 2px 0px 4px rgba(0,0,0,0.4);
-             }
-
-             #border {
-                 position:absolute;
-                 top:10px;
-                 left:10px;
-                 width:500px;
-                 height:23px;
-                 margin:auto auto auto auto;
-                 box-shadow: 0px 0px 4px rgba(0,0,0,0.2);
-                 border-radius:10px;
-             }
-
-             #text {
-                 position:absolute;
-                 top:8px;
-                 left:530px;
-                 width:30px;
-                 height:50px;
-                 margin:auto auto auto auto;
-                 font-size:22px;
-                 color: #000000;
-             }
-
-             div.outerBorder {
-                 position:relative;
-                 top:400px;
-                 width:600px;
-                 height:44px;
-                 margin:auto auto auto auto;
-                 border:8px solid rgba(0,0,0,0.1);
-                 background: rgb(252,252,252); /* Old browsers */
-                 background: -moz-linear-gradient(top,  rgba(252,252,252,1) 0%, rgba(237,237,237,1) 100%); /* FF3.6+ */
-                 background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(252,252,252,1)), color-stop(100%,rgba(237,237,237,1))); /* Chrome,Safari4+ */
-                 background: -webkit-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Chrome10+,Safari5.1+ */
-                 background: -o-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* Opera 11.10+ */
-                 background: -ms-linear-gradient(top,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* IE10+ */
-                 background: linear-gradient(to bottom,  rgba(252,252,252,1) 0%,rgba(237,237,237,1) 100%); /* W3C */
-                 filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfcfc', endColorstr='#ededed',GradientType=0 ); /* IE6-9 */
-                 border-radius:72px;
-                 box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
-             }
-             
 
              
              #config {
@@ -142,275 +73,49 @@
                             >
                                 <option selected>Select a Node by ID</option>
                                 
-                                    <option value="Graphical Model">Graphical Model</option>
-                                
-                                    <option value="arbitrary graphical model">arbitrary graphical model</option>
-                                
-                                    <option value="tree (graph without loops)">tree (graph without loops)</option>
-                                
-                                    <option value="Bethe free energy functional">Bethe free energy functional</option>
-                                
-                                    <option value="zero-temperature limit">zero-temperature limit</option>
-                                
-                                    <option value="ML solution in the zero-temperature limit">ML solution in the zero-temperature limit</option>
-                                
-                                    <option value="zero-temperature version of the BP algorithm finds ML solution">zero-temperature version of the BP algorithm finds ML solution</option>
-                                
-                                    <option value="two models discussed in \u003Ccite\u003E05KW\u003C/cite\u003E and \u003Ccite\u003E08BSS\u003C/cite\u003E">two models discussed in \u003Ccite\u003E05KW\u003C/cite\u003E and \u003Ccite\u003E08BSS\u003C/cite\u003E</option>
-                                
-                                    <option value="g-BP algorithm">g-BP algorithm</option>
-                                
-                                    <option value="Zero-Temperature Version of BP Algorithm">Zero-Temperature Version of BP Algorithm</option>
-                                
-                                    <option value="Linear Programming">Linear Programming</option>
-                                
-                                    <option value="Iterative Belief Propagation (BP)">Iterative Belief Propagation (BP)</option>
-                                
-                                    <option value="Bethe Free Energy Functional">Bethe Free Energy Functional</option>
-                                
-                                    <option value="Maximum-Likelihood (ML) Solution">Maximum-Likelihood (ML) Solution</option>
-                                
-                                    <option value="Linear Programming (LP)">Linear Programming (LP)</option>
-                                
-                                    <option value="Maximum-Likelihood (ML) solution">Maximum-Likelihood (ML) solution</option>
-                                
-                                    <option value="Belief Propagation">Belief Propagation</option>
-                                
-                                    <option value="g-BP Algorithm">g-BP Algorithm</option>
-                                
-                                    <option value="Exactness of Belief Propagation">Exactness of Belief Propagation</option>
-                                
-                                    <option value="g-BP Algorithm output">g-BP Algorithm output</option>
-                                
-                                    <option value="limit of zero temperature">limit of zero temperature</option>
-                                
                                     <option value="Grammar-Based Random Walkers">Grammar-Based Random Walkers</option>
+                                
+                                    <option value="Random Walkers (Markov Chain Analysis)">Random Walkers (Markov Chain Analysis)</option>
                                 
                                     <option value="Semantic Networks">Semantic Networks</option>
                                 
-                                    <option value="User Prescribed Contexts">User Prescribed Contexts</option>
-                                
-                                    <option value="Central Vertices">Central Vertices</option>
+                                    <option value="Vertices">Vertices</option>
                                 
                                     <option value="Eigenvector Centrality">Eigenvector Centrality</option>
                                 
                                     <option value="PageRank">PageRank</option>
                                 
-                                    <option value="RDF (Resource Description Framework)">RDF (Resource Description Framework)</option>
-                                
-                                    <option value="Semantic networks">Semantic networks</option>
-                                
-                                    <option value="edge">edge</option>
-                                
-                                    <option value="two vertices">two vertices</option>
-                                
-                                    <option value="which vertices are most "central"">which vertices are most "central"</option>
-                                
-                                    <option value="in a semantic network">in a semantic network</option>
-                                
-                                    <option value="one relationship type">one relationship type</option>
-                                
-                                    <option value="subjectively more important">subjectively more important</option>
-                                
-                                    <option value="research into semantic network metrics">research into semantic network metrics</option>
-                                
-                                    <option value="context-based rankings">context-based rankings</option>
-                                
-                                    <option value="user prescribed contexts">user prescribed contexts</option>
-                                
-                                    <option value="many of the current semantic network metrics">many of the current semantic network metrics</option>
-                                
-                                    <option value="semantic associations">semantic associations</option>
-                                
-                                    <option value="directed paths between two vertices">directed paths between two vertices</option>
-                                
-                                    <option value="Random walkers, in the context of this article">Random walkers, in the context of this article</option>
-                                
-                                    <option value="a grammar">a grammar</option>
-                                
-                                    <option value="meaning of the final vertex ranking">meaning of the final vertex ranking</option>
-                                
-                                    <option value="Resource Description Framework (RDF)">Resource Description Framework (RDF)</option>
-                                
-                                    <option value="the Semantic Web initiative">the Semantic Web initiative</option>
-                                
-                                    <option value="Faster and better">Faster and better</option>
-                                
-                                    <option value="machine learning approach to corner detection">machine learning approach to corner detection</option>
-                                
-                                    <option value="repeatability and efficiency">repeatability and efficiency</option>
-                                
-                                    <option value="usefulness of a corner detector">usefulness of a corner detector</option>
-                                
-                                    <option value="same scene viewed from different positions">same scene viewed from different positions</option>
-                                
-                                    <option value="features which correspond to the same real-world 3D locations">features which correspond to the same real-world 3D locations</option>
-                                
-                                    <option value="Schmid et al 2000">Schmid et al 2000</option>
-                                
-                                    <option value="repeatability criterion">repeatability criterion</option>
-                                
-                                    <option value="Harris detector">Harris detector</option>
-                                
-                                    <option value="frame rate">frame rate</option>
-                                
-                                    <option value="machine learning">machine learning</option>
-                                
-                                    <option value="SIFT">SIFT</option>
-                                
-                                    <option value="Harris Detector">Harris Detector</option>
-                                
-                                    <option value="Machine Learning Approach">Machine Learning Approach</option>
-                                
-                                    <option value="new heuristic for feature detection">new heuristic for feature detection</option>
-                                
-                                    <option value="live PAL video processing">live PAL video processing</option>
-                                
-                                    <option value="corner detector">corner detector</option>
-                                
-                                    <option value="feature detector">feature detector</option>
-                                
-                                    <option value="SIFT (Scale-Invariant Feature Transform)">SIFT (Scale-Invariant Feature Transform)</option>
-                                
-                                    <option value="efficiency">efficiency</option>
-                                
-                                    <option value="ability to operate at frame rate">ability to operate at frame rate</option>
-                                
-                                    <option value="optimization for repeatability">optimization for repeatability</option>
-                                
-                                    <option value="repeatability">repeatability</option>
-                                
-                                    <option value="3D scenes">3D scenes</option>
-                                
-                                    <option value="comparison of corner detectors">comparison of corner detectors</option>
-                                
-                                    <option value="stringent tests">stringent tests</option>
-                                
-                                    <option value="our heuristic detector">our heuristic detector</option>
-                                
-                                    <option value="existing feature detectors">existing feature detectors</option>
-                                
-                                    <option value="very fast and very high quality">very fast and very high quality</option>
-                                
-                                    <option value="using machine learning">using machine learning</option>
-                                
-                                    <option value="significant improvements in repeatability">significant improvements in repeatability</option>
-                                
-                                    <option value="AI researchers">AI researchers</option>
-                                
-                                    <option value="analogy">analogy</option>
-                                
-                                    <option value="Structure Mapping Theory (SMT)">Structure Mapping Theory (SMT)</option>
-                                
-                                    <option value="Structure Mapping Engine (SME)">Structure Mapping Engine (SME)</option>
-                                
-                                    <option value="Latent Relation Mapping Engine (LRME)">Latent Relation Mapping Engine (LRME)</option>
-                                
-                                    <option value="SME and LRA">SME and LRA</option>
-                                
-                                    <option value="requirement for hand-coded representations">requirement for hand-coded representations</option>
-                                
-                                    <option value="lists of words">lists of words</option>
-                                
-                                    <option value="raw text">raw text</option>
-                                
-                                    <option value="twenty analogical mapping problems">twenty analogical mapping problems</option>
-                                
-                                    <option value="human-level performance">human-level performance</option>
-                                
-                                    <option value="Latent Relational Analysis (LRA)">Latent Relational Analysis (LRA)</option>
-                                
-                                    <option value="Analogical Mapping Problems">Analogical Mapping Problems</option>
-                                
-                                    <option value="Performance">Performance</option>
-                                
-                                    <option value="Various alternative approaches">Various alternative approaches</option>
-                                
-                                    <option value="LRME">LRME</option>
-                                
-                                    <option value="same level of performance">same level of performance</option>
-                                
-                                    <option value="LEO-II">LEO-II</option>
-                                
-                                    <option value="monomodal logics K and S4">monomodal logics K and S4</option>
-                                
-                                    <option value="different access control logics">different access control logics</option>
-                                
-                                    <option value="prominent access control logics">prominent access control logics</option>
-                                
-                                    <option value="Reasoning in Access Control Logics">Reasoning in Access Control Logics</option>
-                                
-                                    <option value="Modal Logic S4">Modal Logic S4</option>
-                                
-                                    <option value="Automating Access Control Logics">Automating Access Control Logics</option>
-                                
-                                    <option value="Access Control Logics">Access Control Logics</option>
-                                
-                                    <option value="Simple Type Theory (Higher-Order Logic)">Simple Type Theory (Higher-Order Logic)</option>
-                                
-                                    <option value="Garg and Abadi">Garg and Abadi</option>
-                                
-                                    <option value="Different Access Control Logics">Different Access Control Logics</option>
-                                
-                                    <option value="Simple Type Theory">Simple Type Theory</option>
-                                
-                                    <option value="Normal Multimodal Logics">Normal Multimodal Logics</option>
-                                
-                                    <option value="Semantic Network">Semantic Network</option>
-                                
-                                    <option value="Vertex">Vertex</option>
-                                
-                                    <option value="Edge">Edge</option>
-                                
-                                    <option value="Central Vertex">Central Vertex</option>
-                                
-                                    <option value="RDF">RDF</option>
-                                
-                                    <option value="Context-Based Ranking">Context-Based Ranking</option>
-                                
-                                    <option value="Random Walker Model">Random Walker Model</option>
-                                
-                                    <option value="Semantic Association">Semantic Association</option>
-                                
-                                    <option value="Grammar">Grammar</option>
-                                
                                     <option value="Corner Detector">Corner Detector</option>
-                                
-                                    <option value="Feature Detection Heuristic">Feature Detection Heuristic</option>
                                 
                                     <option value="Repeatability">Repeatability</option>
                                 
                                     <option value="Efficiency">Efficiency</option>
                                 
+                                    <option value="Feature Detection">Feature Detection</option>
+                                
                                     <option value="Live PAL Video">Live PAL Video</option>
                                 
-                                    <option value="Machine Learning Technique">Machine Learning Technique</option>
-                                
-                                    <option value="3D Scene">3D Scene</option>
-                                
-                                    <option value="Processing Time">Processing Time</option>
-                                
-                                    <option value="Feature Detector">Feature Detector</option>
-                                
-                                    <option value="g-BP">g-BP</option>
-                                
-                                    <option value="Linear Programming (LP) algorithm">Linear Programming (LP) algorithm</option>
-                                
-                                    <option value="Totally-Uni-Modular (TUM) matrix of constraints">Totally-Uni-Modular (TUM) matrix of constraints</option>
+                                    <option value="Machine Learning">Machine Learning</option>
                                 
                                     <option value="Latent Relation Mapping Engine">Latent Relation Mapping Engine</option>
                                 
-                                    <option value="Analogical mapping problems">Analogical mapping problems</option>
+                                    <option value="Structure Mapping Theory (SMT)">Structure Mapping Theory (SMT)</option>
+                                
+                                    <option value="Latent Relational Analysis (LRA)">Latent Relational Analysis (LRA)</option>
+                                
+                                    <option value="Structure Mapping Engine (SME)">Structure Mapping Engine (SME)</option>
                                 
                                     <option value="Garg">Garg</option>
                                 
                                     <option value="Abadi">Abadi</option>
                                 
-                                    <option value="Theorem Prover LEO-II">Theorem Prover LEO-II</option>
+                                    <option value="LEO-II">LEO-II</option>
                                 
-                                    <option value="Automated Access Control Reasoning">Automated Access Control Reasoning</option>
+                                    <option value="Modal logic S4">Modal logic S4</option>
                                 
-                                    <option value="Monomodal Logics K">Monomodal Logics K</option>
+                                    <option value="Normal Multimodal Logics">Normal Multimodal Logics</option>
+                                
+                                    <option value="Higher-order logic">Higher-order logic</option>
                                 
                             </select>
                         </div>
@@ -466,15 +171,6 @@
             <div id="mynetwork" class="card-body"></div>
         </div>
 
-        
-            <div id="loadingBar">
-              <div class="outerBorder">
-                <div id="text">0%</div>
-                <div id="border">
-                  <div id="bar"></div>
-                </div>
-              </div>
-            </div>
         
         
             <div id="config"></div>
@@ -643,8 +339,8 @@
                   
 
                   // parsing and collecting nodes and edges from the python
-                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Graphical Model", "label": "Graphical Model", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "arbitrary graphical model", "label": "arbitrary graphical model", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "tree (graph without loops)", "label": "tree (graph without loops)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bethe free energy functional", "label": "Bethe free energy functional", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "zero-temperature limit", "label": "zero-temperature limit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ML solution in the zero-temperature limit", "label": "ML solution in the zero-temperature limit", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "zero-temperature version of the BP algorithm finds ML solution", "label": "zero-temperature version of the BP algorithm finds ML solution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "two models discussed in \\u003Ccite\\u003E05KW\\u003C/cite\\u003E and \\u003Ccite\\u003E08BSS\\u003C/cite\\u003E", "label": "two models discussed in \\u003Ccite\\u003E05KW\\u003C/cite\\u003E and \\u003Ccite\\u003E08BSS\\u003C/cite\\u003E", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "g-BP algorithm", "label": "g-BP algorithm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Zero-Temperature Version of BP Algorithm", "label": "Zero-Temperature Version of BP Algorithm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Linear Programming", "label": "Linear Programming", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Iterative Belief Propagation (BP)", "label": "Iterative Belief Propagation (BP)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Bethe Free Energy Functional", "label": "Bethe Free Energy Functional", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Maximum-Likelihood (ML) Solution", "label": "Maximum-Likelihood (ML) Solution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Linear Programming (LP)", "label": "Linear Programming (LP)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Maximum-Likelihood (ML) solution", "label": "Maximum-Likelihood (ML) solution", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Belief Propagation", "label": "Belief Propagation", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "g-BP Algorithm", "label": "g-BP Algorithm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Exactness of Belief Propagation", "label": "Exactness of Belief Propagation", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "g-BP Algorithm output", "label": "g-BP Algorithm output", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "limit of zero temperature", "label": "limit of zero temperature", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Grammar-Based Random Walkers", "label": "Grammar-Based Random Walkers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic Networks", "label": "Semantic Networks", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "User Prescribed Contexts", "label": "User Prescribed Contexts", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Central Vertices", "label": "Central Vertices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Eigenvector Centrality", "label": "Eigenvector Centrality", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PageRank", "label": "PageRank", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RDF (Resource Description Framework)", "label": "RDF (Resource Description Framework)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic networks", "label": "Semantic networks", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "edge", "label": "edge", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "two vertices", "label": "two vertices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "which vertices are most \"central\"", "label": "which vertices are most \"central\"", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "in a semantic network", "label": "in a semantic network", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "one relationship type", "label": "one relationship type", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "subjectively more important", "label": "subjectively more important", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "research into semantic network metrics", "label": "research into semantic network metrics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "context-based rankings", "label": "context-based rankings", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "user prescribed contexts", "label": "user prescribed contexts", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "many of the current semantic network metrics", "label": "many of the current semantic network metrics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "semantic associations", "label": "semantic associations", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "directed paths between two vertices", "label": "directed paths between two vertices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Random walkers, in the context of this article", "label": "Random walkers, in the context of this article", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "a grammar", "label": "a grammar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "meaning of the final vertex ranking", "label": "meaning of the final vertex ranking", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Resource Description Framework (RDF)", "label": "Resource Description Framework (RDF)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "the Semantic Web initiative", "label": "the Semantic Web initiative", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Faster and better", "label": "Faster and better", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "machine learning approach to corner detection", "label": "machine learning approach to corner detection", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "repeatability and efficiency", "label": "repeatability and efficiency", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "usefulness of a corner detector", "label": "usefulness of a corner detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "same scene viewed from different positions", "label": "same scene viewed from different positions", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "features which correspond to the same real-world 3D locations", "label": "features which correspond to the same real-world 3D locations", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Schmid et al 2000", "label": "Schmid et al 2000", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "repeatability criterion", "label": "repeatability criterion", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Harris detector", "label": "Harris detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "frame rate", "label": "frame rate", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "machine learning", "label": "machine learning", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SIFT", "label": "SIFT", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Harris Detector", "label": "Harris Detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Machine Learning Approach", "label": "Machine Learning Approach", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "new heuristic for feature detection", "label": "new heuristic for feature detection", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "live PAL video processing", "label": "live PAL video processing", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "corner detector", "label": "corner detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "feature detector", "label": "feature detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SIFT (Scale-Invariant Feature Transform)", "label": "SIFT (Scale-Invariant Feature Transform)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "efficiency", "label": "efficiency", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "ability to operate at frame rate", "label": "ability to operate at frame rate", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "optimization for repeatability", "label": "optimization for repeatability", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "repeatability", "label": "repeatability", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "3D scenes", "label": "3D scenes", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "comparison of corner detectors", "label": "comparison of corner detectors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "stringent tests", "label": "stringent tests", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "our heuristic detector", "label": "our heuristic detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "existing feature detectors", "label": "existing feature detectors", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "very fast and very high quality", "label": "very fast and very high quality", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "using machine learning", "label": "using machine learning", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "significant improvements in repeatability", "label": "significant improvements in repeatability", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "AI researchers", "label": "AI researchers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "analogy", "label": "analogy", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Structure Mapping Theory (SMT)", "label": "Structure Mapping Theory (SMT)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Structure Mapping Engine (SME)", "label": "Structure Mapping Engine (SME)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Latent Relation Mapping Engine (LRME)", "label": "Latent Relation Mapping Engine (LRME)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "SME and LRA", "label": "SME and LRA", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "requirement for hand-coded representations", "label": "requirement for hand-coded representations", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "lists of words", "label": "lists of words", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "raw text", "label": "raw text", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "twenty analogical mapping problems", "label": "twenty analogical mapping problems", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "human-level performance", "label": "human-level performance", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Latent Relational Analysis (LRA)", "label": "Latent Relational Analysis (LRA)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Analogical Mapping Problems", "label": "Analogical Mapping Problems", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Performance", "label": "Performance", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Various alternative approaches", "label": "Various alternative approaches", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LRME", "label": "LRME", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "same level of performance", "label": "same level of performance", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LEO-II", "label": "LEO-II", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "monomodal logics K and S4", "label": "monomodal logics K and S4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "different access control logics", "label": "different access control logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "prominent access control logics", "label": "prominent access control logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Reasoning in Access Control Logics", "label": "Reasoning in Access Control Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Modal Logic S4", "label": "Modal Logic S4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Automating Access Control Logics", "label": "Automating Access Control Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Access Control Logics", "label": "Access Control Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Simple Type Theory (Higher-Order Logic)", "label": "Simple Type Theory (Higher-Order Logic)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Garg and Abadi", "label": "Garg and Abadi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Different Access Control Logics", "label": "Different Access Control Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Simple Type Theory", "label": "Simple Type Theory", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Normal Multimodal Logics", "label": "Normal Multimodal Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic Network", "label": "Semantic Network", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vertex", "label": "Vertex", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Edge", "label": "Edge", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Central Vertex", "label": "Central Vertex", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "RDF", "label": "RDF", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Context-Based Ranking", "label": "Context-Based Ranking", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Random Walker Model", "label": "Random Walker Model", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic Association", "label": "Semantic Association", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Grammar", "label": "Grammar", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Corner Detector", "label": "Corner Detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Feature Detection Heuristic", "label": "Feature Detection Heuristic", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Repeatability", "label": "Repeatability", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Efficiency", "label": "Efficiency", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Live PAL Video", "label": "Live PAL Video", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Machine Learning Technique", "label": "Machine Learning Technique", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "3D Scene", "label": "3D Scene", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Processing Time", "label": "Processing Time", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Feature Detector", "label": "Feature Detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "g-BP", "label": "g-BP", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Linear Programming (LP) algorithm", "label": "Linear Programming (LP) algorithm", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Totally-Uni-Modular (TUM) matrix of constraints", "label": "Totally-Uni-Modular (TUM) matrix of constraints", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Latent Relation Mapping Engine", "label": "Latent Relation Mapping Engine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Analogical mapping problems", "label": "Analogical mapping problems", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Garg", "label": "Garg", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Abadi", "label": "Abadi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Theorem Prover LEO-II", "label": "Theorem Prover LEO-II", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Automated Access Control Reasoning", "label": "Automated Access Control Reasoning", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Monomodal Logics K", "label": "Monomodal Logics K", "shape": "dot", "size": 10}]);
-                  edges = new vis.DataSet([{"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "DEFINED_ON", "to": "arbitrary graphical model", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "SOLVED_EXACTLY_AND_EFFICIENTLY", "to": "tree (graph without loops)", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "MAY_SHOW_MULTIPLE_MINIMA", "to": "Bethe free energy functional", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "MAY_CONVERGE_INCOMPLETELY", "to": "zero-temperature limit", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "DOES_NOT_GUARANTEE_GLOBAL_MINIMUM", "to": "ML solution in the zero-temperature limit", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "HAS_EXCEPTIONS", "to": "zero-temperature version of the BP algorithm finds ML solution", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "SHARES_KEY_FEATURE", "to": "two models discussed in \\u003Ccite\\u003E05KW\\u003C/cite\\u003E and \\u003Ccite\\u003E08BSS\\u003C/cite\\u003E", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Graphical Model", "relationship": "CONSIDERED", "to": "g-BP algorithm", "width": 1}, {"arrows": "to", "description": "Both are related in that zero-temperature versions of algorithms like Belief Propagation can be used to solve specific graphical models.", "from": "Graphical Model", "relationship": "Related To", "to": "Zero-Temperature Version of BP Algorithm", "width": 1}, {"arrows": "to", "description": "Certain graphical models reducible to Linear Programming with TUM constraints can be solved using the method of Linear Programming.", "from": "Graphical Model", "relationship": "Solvable By", "to": "Linear Programming", "width": 1}, {"arrows": "to", "description": "The iterative BP algorithm is used to solve graphical models defined on tree-like graphs.", "from": "Graphical Model", "relationship": "Solved by", "to": "Iterative Belief Propagation (BP)", "width": 1}, {"arrows": "to", "description": "In the context of tree-like graphs, the Bethe free energy functional is minimized by iterative BP algorithms.", "from": "Graphical Model", "relationship": "Minimized by", "to": "Bethe Free Energy Functional", "width": 1}, {"arrows": "to", "description": "In special cases, the ML solutions can be found using efficient algorithms like Linear Programming for certain graphical models with loops.", "from": "Graphical Model", "relationship": "ML solution is found by", "to": "Maximum-Likelihood (ML) Solution", "width": 1}, {"arrows": "to", "description": "A class of graphical models is reducible in the zero-temperature limit to LP with TUM constraints.", "from": "Graphical Model", "relationship": "Reducible to in zero-temperature limit", "to": "Linear Programming (LP)", "width": 1}, {"arrows": "to", "description": "The Bethe free energy functional can have multiple minima, but at zero temperature limit, its minimum may correspond to ML solution under certain conditions.\"", "from": "Bethe free energy functional", "relationship": "Relation", "to": "Maximum-Likelihood (ML) solution", "width": 1}, {"arrows": "to", "description": "Belief Propagation is used in calculating the Bethe free energy functional on tree structures.\"", "from": "Bethe free energy functional", "relationship": "Relation", "to": "Belief Propagation", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "zero-temperature limit", "relationship": "FUNDS", "to": "g-BP Algorithm", "width": 1}, {"arrows": "to", "description": "The zero-temperature version is a special case or extension of the general belief propagation algorithm, used for specific problems.", "from": "Zero-Temperature Version of BP Algorithm", "relationship": "Related To", "to": "Exactness of Belief Propagation", "width": 1}, {"arrows": "to", "description": "For loopy graphical models, the iterative BP algorithm may converge to one of multiple minima or not converge at all.", "from": "Iterative Belief Propagation (BP)", "relationship": "Converges to minimum of", "to": "Bethe Free Energy Functional", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "g-BP Algorithm output", "relationship": "EQUALS", "to": "limit of zero temperature", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Grammar-Based Random Walkers", "relationship": "APPLIES_TO", "to": "Semantic Networks", "width": 1}, {"arrows": "to", "description": "The grammar of the random walkers is defined based on user-prescribed contexts.", "from": "Grammar-Based Random Walkers", "relationship": "Influenced by", "to": "User Prescribed Contexts", "width": 1}, {"arrows": "to", "description": "Central vertices are determined in semantic networks.", "from": "Semantic Networks", "relationship": "Determines", "to": "Central Vertices", "width": 1}, {"arrows": "to", "description": "Eigenvector centrality is derived as a metric for calculating semantically meaningful rankings in semantic networks.", "from": "Semantic Networks", "relationship": "Derived from", "to": "Eigenvector Centrality", "width": 1}, {"arrows": "to", "description": "PageRank is used as another metric to rank vertices within the context of semantic networks.", "from": "Semantic Networks", "relationship": "Used within", "to": "PageRank", "width": 1}, {"arrows": "to", "description": "RDF provides a standard context in which these ideas are presented and applied.", "from": "Semantic Networks", "relationship": "Context for", "to": "RDF (Resource Description Framework)", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Semantic networks", "relationship": "QUALIFIES_MEANING_OF", "to": "edge", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "edge", "relationship": "RELATES", "to": "two vertices", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "which vertices are most \"central\"", "relationship": "IS_DIFFICULT_TO_DETERMINE", "to": "in a semantic network", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "one relationship type", "relationship": "MAY_BE_DEEMED", "to": "subjectively more important", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "research into semantic network metrics", "relationship": "HAS_FOCUSED_PRIMARILY_ON", "to": "context-based rankings", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "context-based rankings", "relationship": "I.E.", "to": "user prescribed contexts", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "many of the current semantic network metrics", "relationship": "RANK", "to": "semantic associations", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "semantic associations", "relationship": "REPRESENTED_BY", "to": "directed paths between two vertices", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Random walkers, in the context of this article", "relationship": "ARE_CONSTRAINED_BY", "to": "a grammar", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "a grammar", "relationship": "DETERMINES_THE", "to": "meaning of the final vertex ranking", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Resource Description Framework (RDF)", "relationship": "OF", "to": "the Semantic Web initiative", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Faster and better", "relationship": "DISCUSSES", "to": "machine learning approach to corner detection", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "repeatability and efficiency", "relationship": "AFFECTS", "to": "usefulness of a corner detector", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "same scene viewed from different positions", "relationship": "SHOULD YIELD", "to": "features which correspond to the same real-world 3D locations", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Schmid et al 2000", "relationship": "CITES", "to": "repeatability criterion", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Harris detector", "relationship": "CANNOT OPERATE AT FRAME RATE", "to": "frame rate", "width": 1}, {"arrows": "to", "description": "The use of machine learning improved the performance of the Harris detector by making it more efficient while maintaining or slightly degrading its repeatability.", "from": "Harris detector", "relationship": "improves", "to": "machine learning", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "frame rate", "relationship": "CANNOT OPERATE AT FRAME RATE", "to": "SIFT", "width": 1}, {"arrows": "to", "description": "Both detectors are used as baselines for comparison, highlighting their performance metrics in relation to the new machine learning approach.", "from": "SIFT", "relationship": "Baseline Comparison", "to": "Harris Detector", "width": 1}, {"arrows": "to", "description": "The machine learning-based feature detector significantly outperformed SIFT on stringent tests based on repeatability criterion applied to 3D scenes.", "from": "SIFT", "relationship": "Comparison", "to": "Machine Learning Approach", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "new heuristic for feature detection", "relationship": "PRESENTED", "to": "live PAL video processing", "width": 1}, {"arrows": "to", "description": "The new corner detector can fully process live PAL video.\"", "from": "live PAL video processing", "relationship": "can fully process", "to": "corner detector", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "machine learning", "relationship": "DERIVES", "to": "feature detector", "width": 1}, {"arrows": "to", "description": "The use of machine learning improved the performance of SIFT by making it more efficient while maintaining or slightly degrading its repeatability.", "from": "machine learning", "relationship": "improves", "to": "SIFT (Scale-Invariant Feature Transform)", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "efficiency", "relationship": "AFFECTS", "to": "ability to operate at frame rate", "width": 1}, {"arrows": "to", "description": "The corner detector needs to be efficient so that it can operate in real-time applications.", "from": "efficiency", "relationship": "requires", "to": "corner detector", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "optimization for repeatability", "relationship": "ALLOWED", "to": "corner detector", "width": 1}, {"arrows": "to", "description": "The corner detector must have high repeatability to ensure consistent feature detection across different viewpoints.", "from": "corner detector", "relationship": "requires", "to": "repeatability", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "3D scenes", "relationship": "USED FOR", "to": "comparison of corner detectors", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "3D scenes", "relationship": "APPLIED TO", "to": "stringent tests", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "our heuristic detector", "relationship": "OUTPERFORMS", "to": "existing feature detectors", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "our heuristic detector", "relationship": "RESULTS IN", "to": "very fast and very high quality", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "using machine learning", "relationship": "PRODUCES", "to": "significant improvements in repeatability", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "AI researchers", "relationship": "ARGUE", "to": "analogy", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Structure Mapping Theory (SMT)", "relationship": "IMPLEMENTED", "to": "Structure Mapping Engine (SME)", "width": 1}, {"arrows": "to", "description": "The LRME builds on the concept of structure mapping, aiming to improve upon SME by removing the need for hand-coded representations.\"", "from": "Structure Mapping Theory (SMT)", "relationship": "Influenced By", "to": "Latent Relation Mapping Engine (LRME)", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Structure Mapping Engine (SME)", "relationship": "INTRODUCED", "to": "Latent Relation Mapping Engine (LRME)", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "COMBINES", "to": "SME and LRA", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "REMOVES_REQUIREMENT", "to": "requirement for hand-coded representations", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "BUILDs", "to": "lists of words", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "USES", "to": "raw text", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "EVALUATED_ON", "to": "twenty analogical mapping problems", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "ACHIEVES", "to": "human-level performance", "width": 1}, {"arrows": "to", "description": "Both LRA and SME ideas are combined to create the LRME, aiming to discover semantic relations automatically without manual coding.\"", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "Combined With", "to": "Latent Relational Analysis (LRA)", "width": 1}, {"arrows": "to", "description": "The LRME is evaluated on a set of analogical mapping problems designed to test its performance against other methods.\"", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "Evaluated By", "to": "Analogical Mapping Problems", "width": 1}, {"arrows": "to", "description": "The performance of the LRME is measured using the set of analogical mapping problems, showing human-level accuracy.", "from": "Latent Relation Mapping Engine (LRME)", "relationship": "Measured By", "to": "Performance", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Various alternative approaches", "relationship": "COMPARED_WITH", "to": "LRME", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Various alternative approaches", "relationship": "NOT_ABLE", "to": "same level of performance", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "LEO-II", "relationship": "can automate reasoning in and about", "to": "monomodal logics K and S4", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "LEO-II", "relationship": "can also automate reasoning in and about", "to": "different access control logics", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "LEO-II", "relationship": "can be applied to automate reasoning in", "to": "prominent access control logics", "width": 1}, {"arrows": "to", "description": "LEO-II can automate the reasoning process in access control logics when embedded in simple type theory.", "from": "LEO-II", "relationship": "Automation", "to": "Reasoning in Access Control Logics", "width": 1}, {"arrows": "to", "description": "The theorem prover LEO-II can be applied to automate reasoning in modal logic S4.", "from": "LEO-II", "relationship": "Can automate reasoning about", "to": "Modal Logic S4", "width": 1}, {"arrows": "to", "description": "The process of automating access control logics is utilizing the theorem prover LEO-II.", "from": "LEO-II", "relationship": "Utilized by", "to": "Automating Access Control Logics", "width": 1}, {"arrows": "to", "description": "Garg and Abadi\u0027s proof involves translating access control logics into Modal Logic S4.", "from": "Modal Logic S4", "relationship": "Translation", "to": "Access Control Logics", "width": 1}, {"arrows": "to", "description": "The paper describes a sound and complete embedding of Modal Logic S4 into Simple Type Theory, facilitating its use with automated theorem provers like LEO-II.", "from": "Modal Logic S4", "relationship": "Translation", "to": "Simple Type Theory (Higher-Order Logic)", "width": 1}, {"arrows": "to", "description": "The researchers Garg and Abadi proved that prominent access control logics can be translated in a sound and complete way into modal logic S4.", "from": "Modal Logic S4", "relationship": "Proved sound and complete translation into", "to": "Garg and Abadi", "width": 1}, {"arrows": "to", "description": "relationship_description_dummy", "from": "Different Access Control Logics", "relationship": "can be embedded in", "to": "Simple Type Theory", "width": 1}, {"arrows": "to", "description": "Normal multimodal logics, including monomodal systems K and S4, can be embedded in simple type theory.", "from": "Simple Type Theory", "relationship": "Embedded in", "to": "Normal Multimodal Logics", "width": 1}, {"arrows": "to", "description": "The process of automating access control logics involves embedding different access control logics into simple type theory.", "from": "Simple Type Theory", "relationship": "Embedded in", "to": "Automating Access Control Logics", "width": 1}, {"arrows": "to", "description": "Vertices are fundamental components of Semantic Networks.", "from": "Semantic Network", "relationship": "Has Vertices", "to": "Vertex", "width": 1}, {"arrows": "to", "description": "Edges define relationships between vertices in a Semantic Network.", "from": "Semantic Network", "relationship": "Contains Edges", "to": "Edge", "width": 1}, {"arrows": "to", "description": "Central Vertices hold significant importance within the network based on context-based rankings.", "from": "Semantic Network", "relationship": "Important for Centrality", "to": "Central Vertex", "width": 1}, {"arrows": "to", "description": "RDF is used to structure data within semantic networks, providing a standard for describing resources.", "from": "Semantic Network", "relationship": "Used to Structure Data", "to": "RDF", "width": 1}, {"arrows": "to", "description": "Context-Based Rankings help determine the relevance of vertices in semantic networks.", "from": "Vertex", "relationship": "Determines Relevance", "to": "Context-Based Ranking", "width": 1}, {"arrows": "to", "description": "Eigenvector Centrality ranks vertices based on the eigenvector centrality metric.", "from": "Vertex", "relationship": "Ranks Vertices Based on Eigenvectors", "to": "Eigenvector Centrality", "width": 1}, {"arrows": "to", "description": "PageRank ranks vertices based on link analysis, similar to web pages in a network.", "from": "Vertex", "relationship": "Ranks Vertices Based on Links", "to": "PageRank", "width": 1}, {"arrows": "to", "description": "The Random Walker model simulates navigation through the graph, visiting vertices according to certain rules or probabilities.", "from": "Vertex", "relationship": "Navigates Vertices", "to": "Random Walker Model", "width": 1}, {"arrows": "to", "description": "Semantic Associations are represented as directed paths between vertices, defined by edges.", "from": "Edge", "relationship": "Defined by Edges", "to": "Semantic Association", "width": 1}, {"arrows": "to", "description": "A Grammar guides and constrains random walking in the model, defining the meaning of paths taken by walkers.", "from": "Random Walker Model", "relationship": "Guides Navigation", "to": "Grammar", "width": 1}, {"arrows": "to", "description": "The feature detection heuristic is used to develop a new corner detector algorithm.", "from": "Corner Detector", "relationship": "uses", "to": "Feature Detection Heuristic", "width": 1}, {"arrows": "to", "description": "Repeatability is a critical property of corner detectors, ensuring consistent results across different viewing positions.", "from": "Corner Detector", "relationship": "requires", "to": "Repeatability", "width": 1}, {"arrows": "to", "description": "Whether it can operate at frame rate with further processing.", "from": "Corner Detector", "relationship": "determines", "to": "Efficiency", "width": 1}, {"arrows": "to", "description": "Live PAL video is the input type used to test the performance of the detector.", "from": "Corner Detector", "relationship": "input", "to": "Live PAL Video", "width": 1}, {"arrows": "to", "description": "Machine learning techniques are applied to the feature detection heuristic to derive an efficient detector.", "from": "Feature Detection Heuristic", "relationship": "applies", "to": "Machine Learning Technique", "width": 1}, {"arrows": "to", "description": "3D scenes are used as inputs for rigorous repeatability testing criteria.", "from": "Repeatability", "relationship": "evaluates", "to": "3D Scene", "width": 1}, {"arrows": "to", "description": "Most other detectors cannot even operate at frame rate (115%).", "from": "Efficiency", "relationship": "lower_than", "to": "Harris Detector", "width": 1}, {"arrows": "to", "description": "The machine learning technique is applied to optimize processing time, reducing it significantly compared to other methods.", "from": "Machine Learning Technique", "relationship": "optimizes", "to": "Processing Time", "width": 1}, {"arrows": "to", "description": "The machine learning approach resulted in a faster and more efficient feature detection method compared to the Harris detector, which could not operate at frame rate under similar conditions.", "from": "Harris Detector", "relationship": "Comparison", "to": "Machine Learning Approach", "width": 1}, {"arrows": "to", "description": "The new feature detector can fully process live PAL video in less than 5% of available processing time, demonstrating its efficiency.", "from": "Live PAL Video", "relationship": "Input Output Relation", "to": "Feature Detector", "width": 1}, {"arrows": "to", "description": "The new feature detector was derived using machine learning techniques as described in the paper.", "from": "Machine Learning Approach", "relationship": "Created", "to": "Feature Detector", "width": 1}, {"arrows": "to", "description": "g-BP is a generalized version of Belief Propagation aiming to find the global minimum, which can be related to ML solutions at zero temperature limit.\"", "from": "Belief Propagation", "relationship": "Relation", "to": "g-BP", "width": 1}, {"arrows": "to", "description": "The efficiency and correctness of the LP algorithm are guaranteed by the use of TUM matrices.\"", "from": "Linear Programming (LP) algorithm", "relationship": "Relation", "to": "Totally-Uni-Modular (TUM) matrix of constraints", "width": 1}, {"arrows": "to", "description": "LRME is tested on a set of twenty analogical mapping tasks designed to assess its performance in creating mappings between words, both scientific and metaphorical in nature.", "from": "Latent Relation Mapping Engine", "relationship": "Evaluates On", "to": "Analogical mapping problems", "width": 1}, {"arrows": "to", "description": "They have co-authored a paper on translating access control logics into modal logic S4.", "from": "Garg", "relationship": "Co-Authorship", "to": "Abadi", "width": 1}, {"arrows": "to", "description": "Garg used the theorem prover to automate reasoning in and about different access control logics.", "from": "Garg", "relationship": "Usage", "to": "Theorem Prover LEO-II", "width": 1}, {"arrows": "to", "description": "Abadi used the theorem prover to validate their translation of access control logics into modal logic S4.", "from": "Abadi", "relationship": "Usage", "to": "Theorem Prover LEO-II", "width": 1}, {"arrows": "to", "description": "LEO-II is applied to automate reasoning in prominent access control logics.", "from": "Theorem Prover LEO-II", "relationship": "Application", "to": "Automated Access Control Reasoning", "width": 1}, {"arrows": "to", "description": "The framework presented embeds normal multimodal logics within simple type theory.", "from": "Simple Type Theory (Higher-Order Logic)", "relationship": "Embedding", "to": "Normal Multimodal Logics", "width": 1}, {"arrows": "to", "description": "Normal multimodal logics include monomodal logics as a specific case, where K is an example of such a system.", "from": "Normal Multimodal Logics", "relationship": "Inclusion", "to": "Monomodal Logics K", "width": 1}]);
+                  nodes = new vis.DataSet([{"color": "#97c2fc", "id": "Grammar-Based Random Walkers", "label": "Grammar-Based Random Walkers", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Random Walkers (Markov Chain Analysis)", "label": "Random Walkers (Markov Chain Analysis)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Semantic Networks", "label": "Semantic Networks", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Vertices", "label": "Vertices", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Eigenvector Centrality", "label": "Eigenvector Centrality", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "PageRank", "label": "PageRank", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Corner Detector", "label": "Corner Detector", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Repeatability", "label": "Repeatability", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Efficiency", "label": "Efficiency", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Feature Detection", "label": "Feature Detection", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Live PAL Video", "label": "Live PAL Video", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Machine Learning", "label": "Machine Learning", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Latent Relation Mapping Engine", "label": "Latent Relation Mapping Engine", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Structure Mapping Theory (SMT)", "label": "Structure Mapping Theory (SMT)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Latent Relational Analysis (LRA)", "label": "Latent Relational Analysis (LRA)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Structure Mapping Engine (SME)", "label": "Structure Mapping Engine (SME)", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Garg", "label": "Garg", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Abadi", "label": "Abadi", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "LEO-II", "label": "LEO-II", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Modal logic S4", "label": "Modal logic S4", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Normal Multimodal Logics", "label": "Normal Multimodal Logics", "shape": "dot", "size": 10}, {"color": "#97c2fc", "id": "Higher-order logic", "label": "Higher-order logic", "shape": "dot", "size": 10}]);
+                  edges = new vis.DataSet([{"arrows": "to", "description": "The text explicitly states that the random walker model is a modified version of the random walker model used in Markov chain analysis.", "from": "Grammar-Based Random Walkers", "relationship": "Based On", "to": "Random Walkers (Markov Chain Analysis)", "width": 1}, {"arrows": "to", "description": "Semantic networks are described as collections of interconnected concepts or nodes, with vertices being one such element.", "from": "Semantic Networks", "relationship": "Contains", "to": "Vertices", "width": 1}, {"arrows": "to", "description": "Eigenvector centrality is defined as a measure of influence for vertices in a network.", "from": "Vertices", "relationship": "Measures Influence Of", "to": "Eigenvector Centrality", "width": 1}, {"arrows": "to", "description": "Similar to eigenvector centrality, PageRank also ranks the importance or influence of vertices within a network.", "from": "Vertices", "relationship": "Measures Influence Of", "to": "PageRank", "width": 1}, {"arrows": "to", "description": "The consistency of the detector\u0027s performance across different viewing positions is crucial for its real-world utility.", "from": "Corner Detector", "relationship": "Determines usefulness", "to": "Repeatability", "width": 1}, {"arrows": "to", "description": "The efficiency affects whether the detector can operate at a high frame rate with additional processing.", "from": "Corner Detector", "relationship": "Determines frame rate operation", "to": "Efficiency", "width": 1}, {"arrows": "to", "description": "While repeatability ensures consistent results, it must not come at the cost of efficiency to ensure real-time operation.", "from": "Repeatability", "relationship": "Trade-off", "to": "Efficiency", "width": 1}, {"arrows": "to", "description": "The feature detector processes live PAL video in real time.", "from": "Feature Detection", "relationship": "Input Source", "to": "Live PAL Video", "width": 1}, {"arrows": "to", "description": "Machine learning is used as a methodology to develop the new feature detector from heuristic methods.", "from": "Feature Detection", "relationship": "Methodology", "to": "Machine Learning", "width": 1}, {"arrows": "to", "description": "The LRME draws inspiration from SMT by incorporating its ideas into a more automated framework.", "from": "Latent Relation Mapping Engine", "relationship": "Inspired By", "to": "Structure Mapping Theory (SMT)", "width": 1}, {"arrows": "to", "description": "LRME integrates LRA to automatically discover semantic relations among words without the need for hand-coded representations, much like how SMT is integrated with LRA in LRME.", "from": "Latent Relation Mapping Engine", "relationship": "Integrated With", "to": "Latent Relational Analysis (LRA)", "width": 1}, {"arrows": "to", "description": "SME is an implementation of SMT, which requires complex hand-coded representations.", "from": "Structure Mapping Theory (SMT)", "relationship": "Implemented In", "to": "Structure Mapping Engine (SME)", "width": 1}, {"arrows": "to", "description": "Both are co-authors involved in the work related to access control logics.", "from": "Garg", "relationship": "Co-Authorship", "to": "Abadi", "width": 1}, {"arrows": "to", "description": "(Garg and Abadi use LEO-II for their research on automating reasoning in access control logics.", "from": "Garg", "relationship": "Research Tool", "to": "LEO-II", "width": 1}, {"arrows": "to", "description": "(Garg and Abadi use LEO-II for their research on automating reasoning in access control logics.", "from": "Abadi", "relationship": "Research Tool", "to": "LEO-II", "width": 1}, {"arrows": "to", "description": "(Modal logic S4 is a part of the normal multimodal logics class, including monomodal logic K and other systems.", "from": "Modal logic S4", "relationship": "Subsumption", "to": "Normal Multimodal Logics", "width": 1}, {"arrows": "to", "description": "(The normal multimodal logics can be embedded within higher-order logic as demonstrated by previous work.", "from": "Normal Multimodal Logics", "relationship": "Embedding", "to": "Higher-order logic", "width": 1}]);
 
                   nodeColors = {};
                   allNodes = nodes.get({ returnType: "Object" });
@@ -705,23 +401,6 @@
                   
 
 
-                  
-                      network.on("stabilizationProgress", function(params) {
-                          document.getElementById('loadingBar').removeAttribute("style");
-                          var maxWidth = 496;
-                          var minWidth = 20;
-                          var widthFactor = params.iterations/params.total;
-                          var width = Math.max(minWidth,maxWidth * widthFactor);
-                          document.getElementById('bar').style.width = width + 'px';
-                          document.getElementById('text').innerHTML = Math.round(widthFactor*100) + '%';
-                      });
-                      network.once("stabilizationIterationsDone", function() {
-                          document.getElementById('text').innerHTML = '100%';
-                          document.getElementById('bar').style.width = '496px';
-                          document.getElementById('loadingBar').style.opacity = 0;
-                          // really clean the dom element
-                          setTimeout(function () {document.getElementById('loadingBar').style.display = 'none';}, 500);
-                      });
                   
 
                   return network;
