@@ -8,7 +8,6 @@ from llama_index.core.schema import MetadataMode
 from llama_index.core import StorageContext
 from llama_index.embeddings.huggingface import HuggingFaceEmbedding
 from dataclasses import dataclass
-from GraphRAGStore import GraphRAGStore
 
 class Neo4jConfig:
     def __init__(
@@ -16,7 +15,7 @@ class Neo4jConfig:
         username: str,
         password: str,
         url: str = "bolt://localhost:7687",
-        database: str = "neo4j"
+        database: str = "arxivCs"
     ):
         self.username = username
         self.password = password
@@ -44,7 +43,7 @@ class LlamaIndexKGBuilder:
     def __init__(
         self,
         neo4j_config: Neo4jConfig,
-        llm_model: str = "ollama run llama3.2:1b",
+        llm_model: str = "mistral",
         embed_model: str = "sentence-transformers/all-MiniLM-L6-v2",
         request_timeout: float = 300.0,
         extractor_config: Optional[ExtractorConfig] = None
@@ -72,18 +71,9 @@ class LlamaIndexKGBuilder:
             database=neo4j_config.database
         )
         
-        #Intializa GraphRAG Store
-        self.graph_rag_store = GraphRAGStore(
-            #self.graph_store
-            username= self.neo4j_config.username,
-            password=self.neo4j_config.password, 
-            url=self.neo4j_config.url,
-            database=neo4j_config.database
-        )
-
         # Initialize storage context
         self.storage_context = StorageContext.from_defaults(
-            property_graph_store=self.graph_rag_store
+            property_graph_store=self.graph_store
         )
         
         # Initialize knowledge graph extractor
@@ -99,7 +89,7 @@ class LlamaIndexKGBuilder:
 
     def clear_graph(self):
         """Clear all nodes and relationships from the graph."""
-        self.graph_rag_store.structured_query("MATCH (n) DETACH DELETE n")
+        self.graph_store.structured_query("MATCH (n) DETACH DELETE n")
 
     def process_papers_from_json(
         self,
@@ -182,7 +172,7 @@ class LlamaIndexKGBuilder:
         """
         return PropertyGraphIndex.from_documents(
             documents,
-            property_graph_store=self.graph_rag_store,
+            property_graph_store=self.graph_store,
             llm=self.llm,
             embed_model=self.embed_model,
             embed_kg_nodes=True,
@@ -200,7 +190,7 @@ class LlamaIndexKGBuilder:
         Returns:
             pd.DataFrame: Query results as a pandas DataFrame
         """
-        result = self.graph_rag_store.structured_query(query)
+        result = self.graph_store.structured_query(query)
         return pd.DataFrame(result)
 
 # Example usage
@@ -209,7 +199,7 @@ if __name__ == "__main__":
     neo4j_config = Neo4jConfig(
         username="neo4j",
         password="password",
-        database="neo4j"
+        database="arxivCs"
     )
     
     extractor_config = ExtractorConfig(
@@ -219,19 +209,17 @@ if __name__ == "__main__":
     
     kg_builder = LlamaIndexKGBuilder(
         neo4j_config=neo4j_config,
-        llm_model="ollama run llama3.2:1b",
+        llm_model="mistral",
         extractor_config=extractor_config
     )
     
     # Process papers
     graph_index = kg_builder.process_papers_from_json(
-        "arxiv_cs_metadata.json",
+        "datasets/arxiv_cs_metadata.json",
         nrows=10,
         clear_existing=True
     )
     
-    #graph_index.property_graph_store.bu
-
     # Example query: ind first 10 entities
     entities = kg_builder.query_graph("""
         MATCH (n)
