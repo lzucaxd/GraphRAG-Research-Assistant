@@ -1,6 +1,10 @@
 import argparse
 from GraphRAG import GraphRAG
 
+"""
+Takes in command line arguments to create the GraphRAG object.
+Facilitates interactive querying of the GraphRAG object.
+"""
 def main():
 
     parser = argparse.ArgumentParser(description='Process research papers data')

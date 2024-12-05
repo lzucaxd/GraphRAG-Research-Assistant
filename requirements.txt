@@ -1,10 +1,8 @@
-backoff==2.2.1
 graspologic==3.3.0
-httpx==0.28.0
-ipython==8.12.3
 llama_index==0.12.2
 nest_asyncio==1.6.0
 networkx==3.4.2
 pandas==2.2.3
 polars==1.16.0
 pyvis==0.3.2
+streamlit==1.40.2

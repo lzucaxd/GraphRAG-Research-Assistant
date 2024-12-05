@@ -19,8 +19,7 @@ their interactions:
 - GraphRAGQueryEngine
 """
 class GraphRAG():
- 
-
+    # Prompt template for extracting entities and relationships from the LLM output.
     KG_TRIPLET_EXTRACT_TMPL = """
         -Goal-
         Given a text document, identify all entities and their entity types from the text and all relationships among the identified entities.
