@@ -4,66 +4,23 @@ from GraphRAG import GraphRAG
 import time
 import streamlit.components.v1 as components
 
+st.set_page_config(
+    page_title="GraphRAG Research Assistant 🧠",
+    page_icon="🧠",
+    layout="wide"
+)
+
+#
+#ADDITIONAL FEATURES (compared to main.py):
+#- This caches the GraphRAG object to avoid reinitializing it on refreshing (it takes a looooong time).
+#- I also added a display_network_graph function to display an interactive community graph within the app.
+#- I can also interactively change the configuration of the GraphRAG object using the sidebar.
 
 
-"""
-ADDITIONAL FEATURES (compared to main.py):
-- This caches the GraphRAG object to avoid reinitializing it on refreshing (it takes a looooong time).
-- I also added a display_network_graph function to display an interactive community graph within the app.
-- I can also interactively change the configuration of the GraphRAG object using the sidebar.
-"""
-
-"""
-Gen AI citation:
-- I used Copilot to help me turn main.py into an Streamlit application.
-"""
-
-@st.cache_resource
-def get_graphrag(json_path, nrows, database, llm, embed_model):
-    with st.spinner('Setting up our GraphRAG. This might take a while...'):
-        graph_rag = GraphRAG(
-            json_path=json_path,
-            nrows=nrows,
-            database=database,
-            llm=llm,
-            embed_model=embed_model
-        )
-    return graph_rag
-
-def display_network_graph(html_file_path):
-    with open(html_file_path, 'r', encoding='utf-8') as f:
-        html_content = f.read()
-    
-    components.html(
-        f"""
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="utf-8">
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"></script>
-                <link href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" rel="stylesheet" />
-                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
-                <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
-                <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
-            </head>
-            <body>
-                {html_content}
-            </body>
-        </html>
-        """,
-        height=800,
-        width=None,
-        scrolling=True 
-    )
+# Gen AI citation:
+# - I used Copilot to help me turn main.py into an Streamlit application.
 
 def main():
-    st.set_page_config(
-        page_title="GraphRAG Research Assistant 🧠",
-        page_icon="🧠",
-        layout="wide"
-    )
-
     if 'config' not in st.session_state:
         st.session_state.config = {
             'json_path': "datasets/arxiv_cs_metadata.json",
@@ -122,7 +79,7 @@ def main():
         
         initialize = st.button("Initialize GraphRAG")
         
-        if initialize:
+        if initialize or (st.session_state.graph_rag is None):
             st.session_state.config.update({
                 'json_path': new_json_path,
                 'nrows': new_nrows,
@@ -140,16 +97,7 @@ def main():
             )
             st.success("GraphRAG initialized successfully!")
     
-    if st.session_state.graph_rag is None and not initialize:
-        st.session_state.graph_rag = get_graphrag(
-                st.session_state.config['json_path'],
-                st.session_state.config['nrows'],
-                st.session_state.config['database'],
-                st.session_state.config['llm'],
-                st.session_state.config['embed_model']
-            )
     if st.session_state.graph_rag is not None:
-        st.success("GraphRAG initialized successfully!")
         st.markdown("---")
             
         with st.expander("View Community Graph"):
@@ -172,5 +120,43 @@ def main():
     else:
         st.info("Please initialize GraphRAG using the sidebar controls first.")
 
+@st.cache_resource
+def get_graphrag(json_path, nrows, database, llm, embed_model):
+    with st.spinner('Setting up our GraphRAG. This might take a while...'):
+        graph_rag = GraphRAG(
+            json_path=json_path,
+            nrows=nrows,
+            database=database,
+            llm=llm,
+            embed_model=embed_model
+        )
+    return graph_rag
+
+def display_network_graph(html_file_path):
+    with open(html_file_path, 'r', encoding='utf-8') as f:
+        html_content = f.read()
+    
+    components.html(
+        f"""
+        <!DOCTYPE html>
+        <html>
+            <head>
+                <meta charset="utf-8">
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js"></script>
+                <link href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" rel="stylesheet" />
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet">
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
+                <link href="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/css/tom-select.css" rel="stylesheet">
+                <script src="https://cdn.jsdelivr.net/npm/tom-select@2.2.2/dist/js/tom-select.complete.min.js"></script>
+            </head>
+            <body>
+                {html_content}
+            </body>
+        </html>
+        """,
+        height=800,
+        width=None,
+        scrolling=True 
+    )
 if __name__ == "__main__":
     main()
