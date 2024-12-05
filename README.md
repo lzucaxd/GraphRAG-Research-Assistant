@@ -7,6 +7,9 @@ Agastya Das, Yogesh Thakku Suresh, Luca-Alexandru Zamfira, Ayush Sharma.
 
 Created for the final project for Graduate Foundations of AI (CS 5100) at Northeastern University.
 
+### Dataset
+https://www.kaggle.com/datasets/Cornell-University/arxiv/code
+
 ## Streamlit Demo 
 ### Initialization Page
 > You might be looking at this for a bit -- ~15 minutes on my device. 
