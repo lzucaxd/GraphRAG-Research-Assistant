@@ -136,7 +136,7 @@ class GraphRAG():
         relationships = [(r1.strip(), r2.strip(), r3.strip(), r4.strip()) 
                         for r1, r2, r3, r4 in relationships]
         
-        # Add default if empty  
+        # Add default values if the entities or relationships are empty  
         # -- This tends to happen when our local LLM hallucinates, and doesn't follow the specified formatting
         if not entities:
             print("Using Dummy Entities")
@@ -161,11 +161,8 @@ class GraphRAG():
         net.from_nx(self.graph_store._create_nx_graph()) 
         net.write_html('community_graph.html')
     
-    #
     def query(self, query_str):
         print(f"Querying GraphRAG with: {query_str}")
         response = self.query_engine.query(query_str)
         print(f"Response: {response}")
-
-        #TODO use rich to display the response
-        # display(Markdown(f"{response.response}"))
+        return response
