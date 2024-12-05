@@ -27,7 +27,7 @@ from llama_index.llms.ollama import Ollama
 """
 CITATION: 
 LlamaIndex Cookbook: GraphRAG Implementation with LlamaIndex - V2
-link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/
+link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/#graphragextractor
 """
 
 class GraphRAGExtractor(TransformComponent):

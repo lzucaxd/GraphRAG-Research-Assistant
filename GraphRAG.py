@@ -13,7 +13,8 @@ from pyvis.network import Network
 
 class GraphRAG():
     """
-    This class initializes all the components required for the GraphRAG system:
+    This class initializes sets up the subcomponents required for the GraphRAG system, and controls
+    their interactions: 
     - GraphRAGStore
     - GraphRAGExtractor
     - GraphRAGQueryEngine
@@ -136,7 +137,7 @@ class GraphRAG():
         relationships = [(r1.strip(), r2.strip(), r3.strip(), r4.strip()) 
                         for r1, r2, r3, r4 in relationships]
         
-        # Add default values if the entities or relationships are empty  
+        # Here I add default values if the entities or relationships are empty  
         # -- This tends to happen when our local LLM hallucinates, and doesn't follow the specified formatting
         if not entities:
             print("Using Dummy Entities")

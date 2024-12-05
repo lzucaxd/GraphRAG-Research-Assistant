@@ -4,6 +4,20 @@ from GraphRAG import GraphRAG
 import time
 import streamlit.components.v1 as components
 
+
+
+"""
+ADDITIONAL FEATURES (compared to main.py):
+- This caches the GraphRAG object to avoid reinitializing it on refreshing (it takes a looooong time).
+- I also added a display_network_graph function to display an interactive community graph within the app.
+- I can also interactively change the configuration of the GraphRAG object using the sidebar.
+"""
+
+"""
+Gen AI citation:
+- I used Copilot to help me turn main.py into an Streamlit application.
+"""
+
 @st.cache_resource
 def get_graphrag(json_path, nrows, database, llm, embed_model):
     with st.spinner('Setting up our GraphRAG. This might take a while...'):

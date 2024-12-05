@@ -7,7 +7,7 @@ import re
 """
 CITATION: 
 LlamaIndex Cookbook: GraphRAG Implementation with LlamaIndex - V2
-link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/
+link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/#graphragextractor
 """
 class GraphRAGQueryEngine(CustomQueryEngine):
     graph_store: GraphRAGStore
