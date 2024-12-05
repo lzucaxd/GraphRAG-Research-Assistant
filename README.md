@@ -37,7 +37,7 @@ Created for the final project for Graduate Foundations of AI (CS 5100) at Northe
 - Create a Project in Neo4j![alt text](images/start_neo4j.png)
 - Install the APOC plugin to your DBMS.![alt text](images/install_plugin.gif) 
 - Start your Neo4j DBMS (You'll need to set a password the first time). 
-  - This should be accessible on your browser at `bolt://localhost:7687`.
+  - This should be accessible on your browser at `bolt://localhost:7687`.![alt text](images/graphdb.png)
   - I keep the default username "neo4j', and use "password" as the password. 
   - Each project can have multiple databases. I highly suggest using the default db, also called "neo4j"
 - Run `pip install -r requirements.txt`
@@ -45,8 +45,8 @@ Created for the final project for Graduate Foundations of AI (CS 5100) at Northe
 - While our methods for cleaning/creating `datasets/arxiv_cs_metadata.json` are included in `src/PullDataset.py`, we reccomend using the default, included, data set for best results/reproducibility. 
 
 ### How to run?
-You have 2 options for running our project if you created:
-> WARNING: This will take some time. The Streamlit method is reccomended because it caches some of the setup processes, and is a nicer experience. The results are equivalent. 
+You have 2 options for running our project if you got through the setup successfully:
+> WARNING: This will take some time. The Streamlit method is reccomended because it caches some of the setup processes (as long as you don't terminate the program), and is a nicer experience. The results are equivalent. 
 1. CLI
 	- run `python src/main.py`. 
 	- If you used our suggested default values you won't need to specify any of these command line arguments:
@@ -56,9 +56,11 @@ You have 2 options for running our project if you created:
 
 ## Known issues:
 - Terminal output is very verbose right now. We should replace this with logging.
-- A local instance of the LLM that works on an M1 max, is still prone to hallucinations. 
+- Most local LLMs that work on my M1 max, are still prone to hallucinations. 
   - These hallucinations affect the entity and relationship extraction process and can create poor results
   - This effect is greatly exacerbated when we've tried to load more than 5 papers
 - While this doesn't affect the community-generation/querying process much, with every subsequent run, the neo4j graph db accumulates extra/duplicate nodes. The db should programmatically be cleared for every run. 
   - For now you can do this manually in the neo4j console, using the cypher query  `match (n) detach delete n`.
+- Every run takes a while, pulling existing runs could be helpful.
+- This could be a bug or feature, but rerunning the node/entity generation process multiple times creates far more detailed communities.
   
