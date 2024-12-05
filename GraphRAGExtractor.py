@@ -4,7 +4,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 from typing import Any, List, Callable, Optional, Union, Dict
-from IPython.display import Markdown, display
+# from IPython.display import Markdown, display
 
 from llama_index.core.async_utils import run_jobs
 from llama_index.core.indices.property_graph.utils import (
@@ -17,14 +17,13 @@ from llama_index.core.graph_stores.types import (
     Relation,
 )
 from llama_index.core.llms.llm import LLM
-from llama_index.llms.ollama import Ollama
 from llama_index.core.prompts import PromptTemplate
 from llama_index.core.prompts.default_prompts import (
     DEFAULT_KG_TRIPLET_EXTRACT_PROMPT,
 )
 from llama_index.core.schema import TransformComponent, BaseNode
-from llama_index.core.bridge.pydantic import BaseModel, Field
-
+from llama_index.core import Settings
+from llama_index.llms.ollama import Ollama
 
 class GraphRAGExtractor(TransformComponent):
     """Extract triples from a graph.
@@ -52,21 +51,21 @@ class GraphRAGExtractor(TransformComponent):
 
     def __init__(
         self,
-        llm: Optional[LLM] = Ollama("mistral"),
+        llm: Optional[LLM] = Ollama(model="qwen2.5",  request_timeout=20000),
         extract_prompt: Optional[Union[str, PromptTemplate]] = None,
         parse_fn: Callable = default_parse_triplets_fn,
         max_paths_per_chunk: int = 10,
         num_workers: int = 4,
     ) -> None:
         """Init params."""
-        from llama_index.core import Settings
+        
 
         if isinstance(extract_prompt, str):
             extract_prompt = PromptTemplate(extract_prompt)
 
         super().__init__(
             llm=llm or Settings.llm,
-            extract_prompt=extract_prompt or DEFAULT_KG_TRIPLET_EXTRACT_PROMPT,
+            extract_prompt=extract_prompt,
             parse_fn=parse_fn,
             num_workers=num_workers,
             max_paths_per_chunk=max_paths_per_chunk,
@@ -95,6 +94,7 @@ class GraphRAGExtractor(TransformComponent):
                 text=text,
                 max_knowledge_triplets=self.max_paths_per_chunk,
             )
+            print(f"llm_response: {llm_response}")
             entities, entities_relationship = self.parse_fn(llm_response)
         except ValueError:
             entities = []

@@ -1,15 +1,13 @@
 from llama_index.core.query_engine import CustomQueryEngine
-from llama_index.core.llms import LLM
+from llama_index.core.llms import LLM, ChatMessage
 from llama_index.core import PropertyGraphIndex
 from GraphRAGStore import GraphRAGStore
-from llama_index.core.llms import ChatMessage
 import re
-
 
 class GraphRAGQueryEngine(CustomQueryEngine):
     graph_store: GraphRAGStore
     index: PropertyGraphIndex
-    llm: LLM
+    llm: LLM 
     similarity_top_k: int = 20
 
     def custom_query(self, query_str: str) -> str:
