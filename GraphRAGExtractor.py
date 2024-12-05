@@ -2,9 +2,7 @@ import asyncio
 import nest_asyncio
 
 nest_asyncio.apply()
-
 from typing import Any, List, Callable, Optional, Union, Dict
-# from IPython.display import Markdown, display
 
 from llama_index.core.async_utils import run_jobs
 from llama_index.core.indices.property_graph.utils import (
@@ -24,6 +22,13 @@ from llama_index.core.prompts.default_prompts import (
 from llama_index.core.schema import TransformComponent, BaseNode
 from llama_index.core import Settings
 from llama_index.llms.ollama import Ollama
+
+
+"""
+CITATION: 
+LlamaIndex Cookbook: GraphRAG Implementation with LlamaIndex - V2
+link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/
+"""
 
 class GraphRAGExtractor(TransformComponent):
     """Extract triples from a graph.
@@ -57,9 +62,6 @@ class GraphRAGExtractor(TransformComponent):
         max_paths_per_chunk: int = 10,
         num_workers: int = 4,
     ) -> None:
-        """Init params."""
-        
-
         if isinstance(extract_prompt, str):
             extract_prompt = PromptTemplate(extract_prompt)
 

@@ -4,6 +4,11 @@ from llama_index.core import PropertyGraphIndex
 from GraphRAGStore import GraphRAGStore
 import re
 
+"""
+CITATION: 
+LlamaIndex Cookbook: GraphRAG Implementation with LlamaIndex - V2
+link: https://docs.llamaindex.ai/en/stable/examples/cookbooks/GraphRAG_v2/
+"""
 class GraphRAGQueryEngine(CustomQueryEngine):
     graph_store: GraphRAGStore
     index: PropertyGraphIndex
@@ -89,7 +94,6 @@ class GraphRAGQueryEngine(CustomQueryEngine):
 
     def aggregate_answers(self, community_answers):
         """Aggregate individual community answers into a final, coherent response."""
-        # intermediate_text = " ".join(community_answers)
         prompt = "Combine the following intermediate answers into a final, concise response."
         messages = [
             ChatMessage(role="system", content=prompt),
