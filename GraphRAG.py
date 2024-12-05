@@ -11,14 +11,15 @@ from GraphRAGStore import GraphRAGStore
 from GraphRAGQueryEngine import GraphRAGQueryEngine
 from pyvis.network import Network
 
+"""
+This class initializes sets up the subcomponents required for the GraphRAG system, and controls
+their interactions: 
+- GraphRAGStore
+- GraphRAGExtractor
+- GraphRAGQueryEngine
+"""
 class GraphRAG():
-    """
-    This class initializes sets up the subcomponents required for the GraphRAG system, and controls
-    their interactions: 
-    - GraphRAGStore
-    - GraphRAGExtractor
-    - GraphRAGQueryEngine
-    """
+ 
 
     KG_TRIPLET_EXTRACT_TMPL = """
         -Goal-
