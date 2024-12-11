@@ -14,7 +14,7 @@ def main():
                       help='Number of rows to read from JSON')
     parser.add_argument('-d', '--database', type=str, default="neo4j",
                       help='Name of the database')
-    parser.add_argument('-l', '--llm', type=str, default="qwen2.5",
+    parser.add_argument('-l', '--llm', type=str, default="tinyllama",
                       help='Ollama Model name')
     parser.add_argument('-e', '--embed-model', type=str, default="avsolatorio/GIST-all-MiniLM-L6-v2",
                       help='HuggingFace Embedding Model Name')

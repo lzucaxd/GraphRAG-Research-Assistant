@@ -19,9 +19,9 @@ class GraphRAGStore(Neo4jPropertyGraphStore):
     
     def __init__(
             self, 
-            llm=Ollama("qwen2.5"), 
+            llm=Ollama("tinyllama"), 
             username="neo4j", 
-            password="password", 
+            password="graphrag", 
             url="bolt://localhost:7687", 
             database="neo4j",
         ):

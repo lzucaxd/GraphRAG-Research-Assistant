@@ -61,7 +61,7 @@ class GraphRAG():
         
         self.graph_store = GraphRAGStore(
             username="neo4j", 
-            password="password", 
+            password="graphrag", 
             url="bolt://localhost:7687", 
             database=self.database,
             llm=self.llm,

@@ -56,7 +56,7 @@ class GraphRAGExtractor(TransformComponent):
 
     def __init__(
         self,
-        llm: Optional[LLM] = Ollama(model="qwen2.5",  request_timeout=20000),
+        llm: Optional[LLM] = Ollama(model="tinyllama",  request_timeout=20000),
         extract_prompt: Optional[Union[str, PromptTemplate]] = None,
         parse_fn: Callable = default_parse_triplets_fn,
         max_paths_per_chunk: int = 10,
