@@ -57,7 +57,7 @@ You have 2 options for running our project if you got through the setup successf
 2. Streamlit UI
    - run `streamlit run src/main_gui.py`
 
-## Known issues:
+## Issues:
 - Terminal output is very verbose right now. We should replace this with logging.
 - Most local LLMs that work on my M1 max, are still prone to hallucinations. 
   - These hallucinations affect the entity and relationship extraction process and can create poor results
